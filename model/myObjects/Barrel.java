@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 public class Barrel extends MyObject {
@@ -17,17 +18,17 @@ public class Barrel extends MyObject {
 
 	@Override
 	public void use(MyCharacter c) {
-		System.out.println("You can fill "+ this.level +" duff bottles with this barrel (USE Duff Barrel)");
+		GameModel.show("You can fill "+ this.level +" duff bottles with this barrel (USE Duff Barrel)");
 	}
 	
 	public void use(MyCharacter c, MyObject duff) {
 		if(this.level <= 0) {
-			System.out.println("Barrel is empty, can't fill");
+			GameModel.show("Barrel is empty, can't fill");
 			return;
 		}
 		
 		if(!(duff instanceof Duff)) {
-			System.out.println("Barrel can fill only empty duff bottles");
+			GameModel.show("Barrel can fill only empty duff bottles");
 			return;
 		}		
 		// Remplire la premiere bouteillr de duff vide dand l'inventaire

@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 public class Burger extends MyObject{
@@ -17,7 +18,7 @@ public class Burger extends MyObject{
 	@Override
 	public void use(MyCharacter c) {
 		c.editHP(this.getHealthEffect());
-		System.out.println("Eating burger ... YES !");
+		GameModel.show("Eating burger ... YES !");
 		c.inventory.remove(this);
 	}
     

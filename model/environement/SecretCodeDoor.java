@@ -1,6 +1,7 @@
 package model.environement;
 
 import java.util.Scanner;
+import model.GameModel;
 
 public class SecretCodeDoor extends AutoLockDoor{
     
@@ -12,12 +13,17 @@ public class SecretCodeDoor extends AutoLockDoor{
     }
     
     public SecretCodeDoor(Room room1, Room room2) {
-    	super(room1, room2);
+    	super(room1, room2, 0, 2);
     	this.SECRET_CODE = 1703;
     }
     
     public SecretCodeDoor(Room room1, Room room2, int code) {
     	super(room1, room2);
+    	this.SECRET_CODE = code;
+    }
+    
+    public SecretCodeDoor(Room room1, Room room2, int code, int x, int y) {
+    	super(room1, room2, x, y);
     	this.SECRET_CODE = code;
     }
    
@@ -27,7 +33,7 @@ public class SecretCodeDoor extends AutoLockDoor{
     }
     
     public void unLock(){
-    	System.out.print("Tape the code to unlock : ");
+    	GameModel.show("Tape the code to unlock : ");
         Scanner code = new Scanner(System.in);
         
         if(code.hasNextInt()){

@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
+import model.GameModel;
 import model.environement.Room;
 
 public abstract class MyCharacter {
@@ -78,7 +79,7 @@ public abstract class MyCharacter {
             }
             // afficher un pourcentage
             hp += "] " + ((level * 100) / MAX_HP) + "%\n";
-            System.out.println(hp);
+            //System.out.println(hp);
     }
 
     public String getName() {
@@ -108,15 +109,27 @@ public abstract class MyCharacter {
 
     public void die() {
             if( this.getHP() <= 0) {
-                    System.err.println(this.getName() + " is dead !");
+                    GameModel.show(this.getName() + " is dead !");
                     this.alive = false;
                     this.dropAllInventory();
+                    this.img = new ImageView("view/img/dead.png");
+                    this.img.setFitHeight(40);
+                    this.img.setFitWidth(40);
+                    GameModel.controller.syncRoom();
             }
 
     }
 
     public ImageView getImg(){
         return this.img;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     
     public int getX() {

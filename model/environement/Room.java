@@ -6,6 +6,7 @@ import model.characters.Enemy;
 import model.myObjects.MyObject;
 import java.util.ArrayList;
 import java.util.List;
+import model.GameModel;
 
 
 public class Room {
@@ -28,7 +29,7 @@ public class Room {
 	//allume la lumiere
  	public void lightUp() {
 		this.isLigth = true;
-		System.out.println("Room is now enlightened!");
+		GameModel.show("Room is now enlightened!");
 	}
 	
  	//ajoute un personnage
@@ -46,6 +47,8 @@ public class Room {
 	public void addEnemy(Enemy guard, Door door) {
 		this.addCharacter(guard);
 		door.guard = guard;
+                guard.setX(door.getX());
+                guard.setY(door.getY());
 	}
 	
 	//ajout d'une porte a la liste de portes

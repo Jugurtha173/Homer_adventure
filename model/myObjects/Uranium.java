@@ -17,6 +17,6 @@ public class Uranium extends MyObject{
 
 	@Override
 	public void use(MyCharacter c) {
-		((Hero)c).attack(((Hero)c).enemyInRoom());
+		((Hero)c).attack(((Hero)c).enemyInRoom(), this);
 	}
 }

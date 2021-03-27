@@ -1,6 +1,7 @@
 package model.myObjects;
 
 import java.util.List;
+import model.GameModel;
 import model.environement.AutoLockDoor;
 import model.characters.MyCharacter;
 import model.environement.Door;
@@ -19,7 +20,7 @@ public class Key extends MyObject {
 
 	@Override
 	public void use(MyCharacter c) {
-		System.out.println(this.descriptif());	
+		GameModel.show(this.descriptif());	
 		List <Door> doors= c.getCurrentRoom().getDoors();
 		for(Door door : doors) {
 			if(door instanceof AutoLockDoor) {

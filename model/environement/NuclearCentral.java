@@ -1,5 +1,6 @@
 package model.environement;
 
+import controller.GameController;
 import model.characters.Talkable;
 import model.characters.Hero;
 import model.characters.Enemy;
@@ -18,6 +19,7 @@ import model.myObjects.Parchment;
 import model.myObjects.Barrel;
 import java.util.ArrayList;
 import java.util.List;
+import model.GameModel;
 
 public class NuclearCentral {
 	
@@ -62,25 +64,25 @@ public class NuclearCentral {
         this.Rooms.add(safety);
 
         // creation des portes
-        Door hd_h = new Door(homerDesk, hall,0, 3 );
+        Door hd_h = new Door(homerDesk, hall,0, 2 );
         Door h_r = new Door(hall, rest, 3, 0);
         Door h_b = new Door(hall, b24, 2, 0);
         Door h_c = new Door(hall, control, 1, 0);
-        Door r_k = new Door(rest, kitchen);
-        Door b_c = new Door(b24, control);
-        Door b_k = new Door(b24, kitchen);
-        ClosedDoor b_s = new ClosedDoor(b24, storage);
-        Door c_m = new Door(control, moes);
-        Door k_e = new Door(kitchen, engine);
-        AutoLockDoor k_a = new AutoLockDoor(kitchen, auditorium);
-        Door k_s = new Door(kitchen, storage);
-        Door s_m = new Door(storage, moes);
-        Door m_o = new Door(moes, operations);
-        Door e_a = new Door(engine, auditorium);
-        SecretCodeDoor a_p = new SecretCodeDoor(auditorium, production, 2210);
-        Door a_e = new Door(auditorium, employee);
-        Door e_o = new Door(employee, operations);
-        Door p_b = new Door(production, burnsDesk);
+        Door r_k = new Door(rest, kitchen, 4, 0);
+        Door b_c = new Door(b24, control, 2, 0);
+        Door b_k = new Door(b24, kitchen, 4, 0 );
+        ClosedDoor b_s = new ClosedDoor(b24, storage, 1, 0);
+        Door c_m = new Door(control, moes, 2 ,0);
+        Door k_e = new Door(kitchen, engine, 4, 0);
+        AutoLockDoor k_a = new AutoLockDoor(kitchen, auditorium, 2, 0);
+        Door k_s = new Door(kitchen, storage, 0, 2);
+        Door s_m = new Door(storage, moes, 4, 2);
+        Door m_o = new Door(moes, operations, 2, 0);
+        Door e_a = new Door(engine, auditorium, 0, 2);
+        SecretCodeDoor a_p = new SecretCodeDoor(auditorium, production, 2210, 2, 0);
+        Door a_e = new Door(auditorium, employee, 0, 2);
+        Door e_o = new Door(employee, operations, 0, 2);
+        Door p_b = new Door(production, burnsDesk, 0, 2);
         SecretCodeDoor b_safety = new SecretCodeDoor(burnsDesk, safety);
 
         // creation des objets
@@ -141,8 +143,6 @@ public class NuclearCentral {
 
         // MAJ des Rooms
         homerDesk.addObject(new Duff());
-        homerDesk.addObject(new Duff());
-        homerDesk.addObject(new Duff());
 
         hall.addCharacter(bart);
         hall.addObject(duff1);
@@ -180,17 +180,5 @@ public class NuclearCentral {
         this.Rooms.get(0).addCharacter(homer);
 
         homer.beAttacked(-3);
-        homer.inventory.add(duff1);
-
-
-    }
-
-    public static void print(String s) {
-    for(int i = 0; i < s.length(); i++) {
-            System.out.print(s.charAt(i));
-            try { Thread.sleep(5);}
-            catch (InterruptedException e) {}
-    }
-    System.out.println();
     }
 }

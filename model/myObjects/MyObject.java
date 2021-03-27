@@ -10,9 +10,8 @@ import model.characters.MyCharacter;
     private String name;
     private int healthEffect = 0;
     int x, y;
-
-
-
+    String url;
+    
     public MyObject(String name, String url, int x, int y) {
         this.img = new ImageView(url);
         this.img.setFitHeight(50);
@@ -20,6 +19,7 @@ import model.characters.MyCharacter;
         this.name = name;
         this.x = x;
         this.y = y;
+        this.url = url;
     }
     public MyObject(String name) {
         this.name = name;
@@ -44,6 +44,10 @@ import model.characters.MyCharacter;
 
     public int getY() {
         return y;
+    }
+    
+    public String getUrl() {
+        return url;
     }
 
 	@Override

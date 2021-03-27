@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -22,15 +23,15 @@
    <right>
       <VBox fx:id="rightVBox" prefHeight="603.0" prefWidth="331.0" style="-fx-border-color: #000;" BorderPane.alignment="CENTER">
          <children>
-            <TabPane fx:id="tabPane" prefHeight="559.0" prefWidth="329.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" tabMinWidth="80.0">
               <tabs>
                 <Tab fx:id="mapTab" text="MAP">
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <ScrollPane prefHeight="482.0" prefWidth="329.0">
+                              <ScrollPane prefHeight="500.0" prefWidth="499.0">
                                  <content>
-                                    <ImageView fitHeight="511.0" fitWidth="827.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="499.0" fitWidth="829.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@img/map.png" />
                                        </image>
@@ -48,14 +49,24 @@
                    <content>
                         <VBox prefHeight="528.0" prefWidth="329.0">
                            <children>
-                              <Label fx:id="labelMessage" alignment="TOP_LEFT" contentDisplay="CENTER" lineSpacing="3.0" prefHeight="528.0" prefWidth="330.0" text="HELP ?" wrapText="true">
-                                 <font>
-                                    <Font name="System Italic" size="13.0" />
-                                 </font>
-                                 <cursor>
-                                    <Cursor fx:constant="TEXT" />
-                                 </cursor>
-                              </Label>
+                              <ScrollPane prefHeight="500.0" prefWidth="325.0">
+                                 <content>
+                                    <Label fx:id="labelMessage" alignment="TOP_LEFT" contentDisplay="CENTER" ellipsisString=".." lineSpacing="3.0" prefWidth="310.0" wrapText="true">
+                                       <font>
+                                          <Font name="System Italic" size="13.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="TEXT" />
+                                       </cursor>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </content>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </ScrollPane>
                            </children>
                         </VBox>
                    </content>
@@ -90,7 +101,7 @@
       </GridPane>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="57.0" prefWidth="869.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="13.0" prefWidth="869.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="564.0">
                <children>
@@ -98,26 +109,52 @@
                   <ProgressBar fx:id="hpBar" prefHeight="18.0" prefWidth="389.0" progress="0.0" />
                </children>
             </HBox>
-            <ButtonBar fx:id="buttonBar" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="299.0">
+            <ButtonBar fx:id="buttonBar" nodeOrientation="RIGHT_TO_LEFT" prefHeight="16.0" prefWidth="280.0">
               <buttons>
-                  <Button fx:id="quitBtn" mnemonicParsing="false" onAction="#quit" text="Quit">
+                  <Button fx:id="quitBtn" minWidth="22.0" mnemonicParsing="false" onAction="#quit" prefHeight="6.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <Button fx:id="helpBtn" mnemonicParsing="false" onAction="#help" text="Help">
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/quit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="helpBtn" minWidth="40.0" mnemonicParsing="false" onAction="#help" prefHeight="14.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                <Button fx:id="lookBtn" mnemonicParsing="false" onAction="#look" text="Look">
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/help.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                     
+                <Button fx:id="lookBtn" minWidth="8.0" mnemonicParsing="false" onAction="#look" prefHeight="4.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
-                     </cursor></Button>
+                     </cursor>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/eye.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>   
+                </Button>
               </buttons>
             </ButtonBar>
          </children>
       </HBox>
    </bottom>
    <top>
-      <Label fx:id="topLabel" prefHeight="34.0" prefWidth="328.0" text="Current room : " BorderPane.alignment="CENTER" />
+      <Label fx:id="topLabel" prefHeight="34.0" text="Top label" textAlignment="CENTER" BorderPane.alignment="CENTER" />
    </top>
 </BorderPane>

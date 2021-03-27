@@ -1,5 +1,7 @@
 package model.environement;
 
+import model.GameModel;
+
 public class AutoLockDoor extends Door {
     
     private boolean lock = true;
@@ -12,12 +14,16 @@ public class AutoLockDoor extends Door {
     	super(room1, room2);
     }
     
+    public AutoLockDoor(Room room1, Room room2, int x, int y) {
+    	super(room1, room2, x, y);
+    }
+    
     @Override
     public void open(){
         if( !(this.lock) ) {
         	super.open();
         } else { 
-        	System.out.println("The door is locked! Use key to unlock.");
+        	GameModel.show("The door is locked! Use key to unlock.");
         	
         }
     }
@@ -31,7 +37,7 @@ public class AutoLockDoor extends Door {
     public void unLock(){
         if( !(super.isState())) {
             this.lock = false;
-            System.out.println("The door is now unlock! You can go.");
+            GameModel.show("The door is now unlock! You can go.");
         }
         	
     }

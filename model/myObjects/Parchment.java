@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 public class Parchment extends MyObject {
@@ -24,7 +25,7 @@ public class Parchment extends MyObject {
 
 	@Override
 	public void use(MyCharacter c) {
-		System.out.println(this.descriptif());
+		GameModel.showMessage(this.descriptif());
 	}
 	
 	public String getCryptedMessage() {

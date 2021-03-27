@@ -16,7 +16,7 @@ public class Donuts extends MyObject{
 
 	@Override
 	public void use(MyCharacter c) {
-		System.out.println();
+		System.out.println("GOOD GAME");
 		
 	}
 

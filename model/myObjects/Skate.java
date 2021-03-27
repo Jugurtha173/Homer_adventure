@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 
@@ -13,13 +14,13 @@ public class Skate extends MyObject{
     }
     
     @Override
-	public String descriptif() {
-		
-		return this.toString() +":  Damage: " + this.getHealthEffect();
-	}
+    public String descriptif() {
 
-	@Override
-	public void use(MyCharacter c) {
-		System.out.println(this.descriptif());	
-	}
+            return this.toString() +":  Damage: " + this.getHealthEffect();
+    }
+
+    @Override
+    public void use(MyCharacter c) {
+            GameModel.show(this.descriptif());	
+    }
 }

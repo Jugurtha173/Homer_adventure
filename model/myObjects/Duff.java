@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 
@@ -21,7 +22,7 @@ public class Duff extends MyObject{
 
 	public void fill() {
 		this.full = true;
-		System.out.println("Duff filled");
+		GameModel.show("Duff filled");
 	}
 	
 	@Override
@@ -36,7 +37,7 @@ public class Duff extends MyObject{
 			if(obj instanceof Duff && !((Duff) obj).isEmpty())
 				return (Duff)obj;
 			
-		System.out.println("You have no full duff in your inventory");
+		GameModel.show("You have no full duff in your inventory");
 		return null;
 		
 	}
@@ -46,7 +47,7 @@ public class Duff extends MyObject{
 			if(obj instanceof Duff && ((Duff) obj).isEmpty())
 				return (Duff)obj;
 			
-		System.out.println("You have no Empty duff in your inventory");
+		GameModel.show("You have no Empty duff in your inventory");
 		return null;
 		
 	}
@@ -62,7 +63,7 @@ public class Duff extends MyObject{
 		if(duff == null) {	
 			return;
 		} else {
-			System.out.println("Drinkink duff ... YES !");
+			GameModel.show("Drinkink duff ... YES !");
 			c.editHP(duff.getHealthEffect());
 			duff.full = false;
 		}

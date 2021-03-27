@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.GameController;
 import java.util.List;
 import javafx.beans.property.SimpleDoubleProperty;
 import model.characters.Hero;
@@ -17,11 +18,13 @@ import model.environement.NuclearCentral;
  */
 public class GameModel {
     
+    public static GameController controller;
     NuclearCentral nc = new NuclearCentral();
     Hero homer = new Hero("Homer");
     
-    public GameModel(){
-        nc.init(homer);     
+    public GameModel(GameController controller){
+        this.nc.init(homer);
+        GameModel.controller = controller;
     }
     
     public NuclearCentral getNuclearCentral(){
@@ -65,4 +68,11 @@ public class GameModel {
         return this.homer.inventory;
     }
     
+    public static void show(String s) {
+        controller.show(s);
+    }
+    
+    public static void showMessage(String s) {
+        GameModel.controller.showMessage(s);
+    }
 }

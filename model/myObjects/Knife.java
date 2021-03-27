@@ -7,7 +7,7 @@ import model.characters.Hero;
 public class Knife extends MyObject{
 
 	public Knife() {
-		super("Knife", -5);
+		super("Knife", -5, "view/img/knife.png", 4, 1);
 		
 	}
 	
@@ -19,7 +19,7 @@ public class Knife extends MyObject{
 
 	@Override
 	public void use(MyCharacter c) {
-		((Hero)c).attack(((Hero)c).enemyInRoom());
+		((Hero)c).attack(((Hero)c).enemyInRoom(), this);
 	}
     
 }
