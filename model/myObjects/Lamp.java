@@ -5,7 +5,7 @@ import model.characters.MyCharacter;
 public class Lamp extends MyObject {
 	
 	public Lamp() {
-		super("Lamp");
+		super("Lamp", 0, "view/img/lamp.png", 0, 4);
 	}
 
 	@Override

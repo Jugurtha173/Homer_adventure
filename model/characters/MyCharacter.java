@@ -33,13 +33,16 @@ public abstract class MyCharacter {
             this.HP = MAX_HP;
     }
     public MyCharacter(String name, String url) {
+            this(name, url, 2, 2);
+    }
+    public MyCharacter(String name, String url, int x, int y) {
             this.name = name;
             this.HP = MAX_HP;
             this.img = new ImageView(url);
             this.img.setFitHeight(100);
             this.img.setFitWidth(50);
-            this.x = 2;
-            this.y = 2;
+            this.x = x;
+            this.y = y;
     }
 
     public int getHP() {

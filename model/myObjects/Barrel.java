@@ -7,7 +7,7 @@ public class Barrel extends MyObject {
 	private int level = 5;
 
 	public Barrel() {
-		super("Barrel");
+		super("Barrel", 0, "view/img/barrel.png", 1, 1);
 	}
 	
 	@Override

@@ -5,7 +5,7 @@ import model.characters.MyCharacter;
 public class Burger extends MyObject{
 
 	public Burger() {
-		super("Burger", 3);
+		super("Burger", 3, "view/img/burger.png", 3, 2);
 	}
 	
 	@Override

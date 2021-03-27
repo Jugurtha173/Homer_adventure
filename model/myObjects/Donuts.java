@@ -6,7 +6,7 @@ public class Donuts extends MyObject{
 
 	
 	public Donuts() {
-		super("Donuts",0);
+		super("Donuts",0, "view/img/donut.png", 2, 2);
 	}
 	
 	@Override

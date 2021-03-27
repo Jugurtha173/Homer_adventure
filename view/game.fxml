@@ -37,7 +37,6 @@
                                     </ImageView>
                                  </content>
                               </ScrollPane>
-                              <Label prefHeight="34.0" prefWidth="328.0" text="Current room : " />
                            </children>
                         </VBox>
                      </content></Tab>
@@ -118,4 +117,7 @@
          </children>
       </HBox>
    </bottom>
+   <top>
+      <Label fx:id="topLabel" prefHeight="34.0" prefWidth="328.0" text="Current room : " BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>

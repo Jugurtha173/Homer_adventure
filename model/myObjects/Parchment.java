@@ -6,7 +6,7 @@ public class Parchment extends MyObject {
 	private boolean crypt = true;
 	
 	public Parchment() {
-		super("Parchment");
+		super("Parchment", 0, "view/img/parchment.png", 2, 2);
 	}
 	
 	public void decrypt() {

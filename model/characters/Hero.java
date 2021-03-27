@@ -165,18 +165,14 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 	
 	//aller dans une salle
 	public void go(String room) {
-            System.out.println("je veux aller dans   : " + room );
 		// la liste des portes de la Room actuelle
 		List<Door> ld = this.getCurrentRoom().getDoors();
 		// on parcours les portes
 		for(Door door : ld) {
-                    System.out.println("-----------porte : " + door.toString());
 			// pour chaque porte on recupere la Room d'a cote
 			Room r = door.room[0] != this.getCurrentRoom() ? door.room[0] : door.room[1] ;
-                        System.out.println("jai get la room : " + r.getName() + " je veux aller dans "+ room);
 			// si c'est bien la Room qu'on veut
 			if(r.getName().equalsIgnoreCase(room)) {
-                            System.out.println("je suis ici ----- : " + r.getName());
 				// on verifie si il y a un ennemie
 				if(door.guard != null && door.guard.isAlive()) {
 					door.guard.attack((Attackable)this);

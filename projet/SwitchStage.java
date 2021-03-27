@@ -14,8 +14,9 @@ public class SwitchStage extends Stage{
             this.setScene(new Scene(root));
             this.setResizable(false);
         }
-       catch (Exception ignored){
+       catch (Exception e){
            System.out.println("ERREUR, SwitchStage");
+           e.printStackTrace();
        }
     }
 }

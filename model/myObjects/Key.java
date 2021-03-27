@@ -8,7 +8,7 @@ import model.environement.Door;
 public class Key extends MyObject {
 
 	public Key() {
-		super("Key");
+		super("Key", 0, "view/img/key.png", 2, 3);
 	}
 	
 	@Override
