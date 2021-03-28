@@ -61,17 +61,13 @@ public class Other extends MyCharacter implements Talkable{
 		List<MyObject> inv = ((MyCharacter)t).inventory;
 		for(MyObject obj : inv) {
 			if(obj instanceof Parchment) {
-                            System.out.println("je suis ici");
 				((Parchment)obj).decrypt();
 				GameModel.showMessage(this.speechs.get(1));
-                                System.out.println("this.speechs.get(1)");
 				GameModel.showMessage(obj.descriptif());
-                                System.out.println("obj.descriptif()");
 				return;
 			}
 		}
 		GameModel.showMessage(this.speechs.get(2));
-                System.out.println("this.speechs.get(2)");
 
 	}
 	

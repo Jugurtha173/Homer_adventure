@@ -16,6 +16,8 @@ public class Door {
     public Door(){
         this.state = false;
     }
+
+   
     
     public Door(boolean state){
         this.state = state;
@@ -42,6 +44,14 @@ public class Door {
 
     public int getY() {
         return y;
+    }
+    
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     
     public void open(){

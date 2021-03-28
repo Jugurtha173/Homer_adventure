@@ -68,22 +68,22 @@ public class NuclearCentral {
         Door h_r = new Door(hall, rest, 3, 0);
         Door h_b = new Door(hall, b24, 2, 0);
         Door h_c = new Door(hall, control, 1, 0);
-        Door r_k = new Door(rest, kitchen, 4, 0);
-        Door b_c = new Door(b24, control, 2, 0);
-        Door b_k = new Door(b24, kitchen, 4, 0 );
+        Door r_k = new Door(rest, kitchen, 2, 0);
+        Door b_c = new Door(b24, control, 0, 2);
+        Door b_k = new Door(b24, kitchen, 3, 0 );
         ClosedDoor b_s = new ClosedDoor(b24, storage, 1, 0);
         Door c_m = new Door(control, moes, 2 ,0);
-        Door k_e = new Door(kitchen, engine, 4, 0);
+        Door k_e = new Door(kitchen, engine, 3, 0);
         AutoLockDoor k_a = new AutoLockDoor(kitchen, auditorium, 2, 0);
         Door k_s = new Door(kitchen, storage, 0, 2);
-        Door s_m = new Door(storage, moes, 4, 2);
+        Door s_m = new Door(storage, moes, 0, 2);
         Door m_o = new Door(moes, operations, 2, 0);
         Door e_a = new Door(engine, auditorium, 0, 2);
         SecretCodeDoor a_p = new SecretCodeDoor(auditorium, production, 2210, 2, 0);
         Door a_e = new Door(auditorium, employee, 0, 2);
         Door e_o = new Door(employee, operations, 0, 2);
         Door p_b = new Door(production, burnsDesk, 0, 2);
-        SecretCodeDoor b_safety = new SecretCodeDoor(burnsDesk, safety);
+        SecretCodeDoor b_safety = new SecretCodeDoor(burnsDesk, safety, 0, 2);
 
         // creation des objets
         MyObject skate = new Skate();

@@ -5,7 +5,7 @@ import model.characters.Hero;
 
 public class Uranium extends MyObject{
 	public Uranium() {
-		super("Uranium", -13);
+		super("Uranium", -13, "view/img/uranium1.jpg", 1, 4);
 		
 	}
 	

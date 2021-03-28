@@ -231,7 +231,14 @@ public class GameController implements Initializable {
                 myHero.go(door.getOtherRoom((Hero)myHero));
                 this.syncRoom();
             });
-            gridPane.add(img, door.getX(), door.getY());
+            if(door.room[1].equals(myHero.getCurrentRoom())){
+                gridPane.add(img, 4 - door.getX(), 4 - door.getY());
+            } else {
+                gridPane.add(img, door.getX(), door.getY());
+            }
+                
+            
+            
             
         }
     }

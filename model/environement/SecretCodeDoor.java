@@ -12,8 +12,8 @@ public class SecretCodeDoor extends AutoLockDoor{
         this.SECRET_CODE = 1703;
     }
     
-    public SecretCodeDoor(Room room1, Room room2) {
-    	super(room1, room2, 0, 2);
+    public SecretCodeDoor(Room room1, Room room2, int x, int y) {
+    	super(room1, room2, x, y);
     	this.SECRET_CODE = 1703;
     }
     
