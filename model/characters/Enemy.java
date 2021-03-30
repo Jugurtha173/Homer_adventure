@@ -36,8 +36,10 @@ public class Enemy extends MyCharacter implements Attackable{
                     detail += inventory.get(0).toString() + ", " + ((this.inventory.get(0).getHealthEffect() * 100) / MyCharacter.MAX_HP) ;
                     target.beAttacked(this.inventory.get(0).getHealthEffect());		
                     // on perds le premier objet de l'inventaire
-                    this.getCurrentRoom().addObject(this.inventory.get(0));          
+                    this.getCurrentRoom().addObject(this.inventory.get(0));
+                    System.out.println("----------- ici ");
                     GameModel.controller.syncRoom();
+                    System.out.println("normalement room Sync");
                     this.inventory.remove(this.inventory.get(0));
             } else {
                     // sinon on frappe la cible avec un coup-de-poing ( un coup-de-poing implique -5% de points de vie)

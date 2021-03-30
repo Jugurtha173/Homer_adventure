@@ -8,6 +8,7 @@ package controller;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -38,36 +39,24 @@ import model.characters.Hero;
 import model.characters.MyCharacter;
 import model.environement.Door;
 import model.myObjects.MyObject;
+import view.GameView;
 /**
  *
  * @author JUGURTHA
  */
-public class GameController implements Initializable {
-    
-    @FXML BorderPane root;
-    @FXML VBox rightVBox;
-    @FXML GridPane gridPane;
-    @FXML ImageView homer;
-    @FXML Button lookBtn;
-    @FXML Button helpBtn;
-    @FXML Button quitBtn;
-    @FXML TabPane tabPane;
-    @FXML Tab mapTab;
-    @FXML Tab inventoryTab;
-    @FXML Tab messageTab;
-    @FXML Label labelMessage;
-    @FXML Label topLabel;
-    @FXML ProgressBar hpBar;
-    @FXML VBox vboxInventory;
+public class GameController {
 
-    //Random rand = new Random();
-    GameModel model = new GameModel(this);
+    public GameModel model;
+    public GameView view;
     Hero myHero = model.getHomer();
-  
     
-    @FXML
+    public GameController(){
+        this.model = new GameModel(this);
+        this.view  = new GameView(this);
+    }
+  
     public void moveHomer(KeyEvent e ) {
-        gridPane.getChildren().remove(homer);
+        view.gridPane.getChildren().remove(view.homer);
 
         if ( null != e.getCode())
             switch (e.getCode()) {
@@ -77,32 +66,32 @@ public class GameController implements Initializable {
                 case D: model.moveHomer(+1, 0); break;
                 default: break;
             }
-        gridPane.add(homer, model.getX(), model.getY());          
+        view.gridPane.add(view.homer, model.getX(), model.getY());          
     }
     
-    @FXML
+
     public void help(){
-        tabPane.getSelectionModel().select(messageTab);
-        this.labelMessage.setText(this.model.help());
+        //ControllerHelp();
+        
+        view.tabPane.getSelectionModel().select(view.messageTab);
+        String s = this.model.help();
+        view.labelMessage.setText(s);
     }
     
-    @FXML
     public void look(){
-        tabPane.getSelectionModel().select(messageTab);
-        this.labelMessage.setText(this.model.look());
+        view.tabPane.getSelectionModel().select(view.messageTab);
+        view.labelMessage.setText(this.model.look());
     }
     
-    @FXML
     public void quit(){
         myHero.beAttacked(-1);
     }
  
     
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         Image image = new Image("view/img/border.jpg");
-        gridPane.setBackground(
+        view.gridPane.setBackground(
             new Background(
                 new BackgroundImage(image,
                     BackgroundRepeat.REPEAT,
@@ -112,26 +101,26 @@ public class GameController implements Initializable {
             )
         );
             
-        root.addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
+        view.root.addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
             moveHomer(event);
         });
-        hpBar.progressProperty().bind(model.hpProperty());
+        view.hpBar.progressProperty().bind(model.hpProperty());
         
         syncRoom();   
     }
     
     public void addInventory(ImageView img){
-        vboxInventory.getChildren().add(img);
+        view.vboxInventory.getChildren().add(img);
     }
     
     public void syncRoom(){
-        gridPane.getChildren().removeAll(gridPane.getChildren());
-        topLabel.setText(""+ myHero.getCurrentRoom());
+        view.gridPane.getChildren().removeAll(view.gridPane.getChildren());
+        view.topLabel.setText(""+ myHero.getCurrentRoom());
         syncDoors();
         
         if(!(myHero.getCurrentRoom().isLigth)){
             Image image = new Image("view/img/border.png");
-            gridPane.setBackground(
+            view.gridPane.setBackground(
                 new Background(
                     new BackgroundImage(image,
                         BackgroundRepeat.REPEAT,
@@ -139,7 +128,6 @@ public class GameController implements Initializable {
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT)
                 )
-                
             );
             return;
         }
@@ -148,10 +136,10 @@ public class GameController implements Initializable {
         syncCharacters();
         
         
-        gridPane.getChildren().remove(homer);
-        gridPane.add(homer, model.getX(), model.getY());
+        view.gridPane.getChildren().remove(view.homer);
+        view.gridPane.add(view.homer, model.getX(), model.getY());
         
-        for (Node node : gridPane.getChildren()) {
+        for (Node node : view.gridPane.getChildren()) {
             GridPane.setHalignment(node, HPos.CENTER);
         }
         
@@ -160,6 +148,7 @@ public class GameController implements Initializable {
     private void syncObjects(){
         List<MyObject> objects = myHero.getCurrentRoom().getObjects();
         for (MyObject object : objects) {
+            
             ImageView img = object.getImg();
             Tooltip tooltip = new Tooltip("Look : " + object.descriptif());
             Tooltip.install(img, tooltip);
@@ -177,8 +166,8 @@ public class GameController implements Initializable {
             
             img.setOnMouseClicked(e -> {
                 this.myHero.take(object.toString());
-                this.gridPane.getChildren().remove(img);
-                this.addInventory(img);
+                view.gridPane.getChildren().remove(img);
+                view.addInventory(img);
                 
                 img.setOnMouseClicked(event -> {
                     myHero.use(object.toString());
@@ -186,7 +175,8 @@ public class GameController implements Initializable {
             });
             
             img.setCursor(Cursor.HAND);
-            gridPane.add(img, object.getX(), object.getY());
+            view.gridPane.add(img, object.getX(), object.getY());
+            System.out.println("j'ajoute un "+ object + " à la position [ " + object.getX() + " , " + object.getY() + " ]");
         }
     }
     
@@ -209,9 +199,7 @@ public class GameController implements Initializable {
                         myHero.talk();
                     });
                 }
-          
-            
-                gridPane.add(img, ch.getX(), ch.getY());
+                view.gridPane.add(img, ch.getX(), ch.getY());
             }
         }
     }
@@ -232,9 +220,9 @@ public class GameController implements Initializable {
                 this.syncRoom();
             });
             if(door.room[1].equals(myHero.getCurrentRoom())){
-                gridPane.add(img, 4 - door.getX(), 4 - door.getY());
+                view.gridPane.add(img, 4 - door.getX(), 4 - door.getY());
             } else {
-                gridPane.add(img, door.getX(), door.getY());
+                view.gridPane.add(img, door.getX(), door.getY());
             }
                 
             
@@ -244,14 +232,17 @@ public class GameController implements Initializable {
     }
     
     public void show(String text){
-        this.topLabel.setText(text);
+        view.topLabel.setText(text);
     }
     
     public void showMessage(String text){
         
-        tabPane.getSelectionModel().select(messageTab);
-        String newText = this.labelMessage.getText() + "\n ------------------------------\n" + text;
-        this.labelMessage.setText(newText);
+        view.tabPane.getSelectionModel().select(view.messageTab);
+        String newText = view.labelMessage.getText() + "\n ------------------------------\n" + text;
+        view.labelMessage.setText(newText);
     }
     
+    public SimpleDoubleProperty getHpProperty(){
+        return model.hpProperty();
+    }
 }

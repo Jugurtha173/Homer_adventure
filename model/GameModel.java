@@ -73,6 +73,6 @@ public class GameModel {
     }
     
     public static void showMessage(String s) {
-        GameModel.controller.showMessage(s);
+        controller.showMessage(s);
     }
 }
