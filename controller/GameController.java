@@ -14,11 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,9 +23,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import model.GameModel;
 import javafx.scene.control.PopupControl;
 import model.characters.Attackable;
@@ -44,19 +36,25 @@ import view.GameView;
  *
  * @author JUGURTHA
  */
-public class GameController {
+public class GameController implements Initializable {
+    
+
 
     public GameModel model;
-    public GameView view;
-    Hero myHero = model.getHomer();
+    GameView view;
+    Hero myHero;
     
-    public GameController(){
+    public GameController(GameView view){
         this.model = new GameModel(this);
-        this.view  = new GameView(this);
+        this.view = view;
+        this.view.setController(this);
+        this.myHero = model.getHomer();
     }
   
+    
+    @FXML
     public void moveHomer(KeyEvent e ) {
-        view.gridPane.getChildren().remove(view.homer);
+        this.view.getGridPane().getChildren().remove(this.view.getHomer());
 
         if ( null != e.getCode())
             switch (e.getCode()) {
@@ -66,32 +64,32 @@ public class GameController {
                 case D: model.moveHomer(+1, 0); break;
                 default: break;
             }
-        view.gridPane.add(view.homer, model.getX(), model.getY());          
+        this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());          
     }
     
-
+    @FXML
     public void help(){
-        //ControllerHelp();
-        
-        view.tabPane.getSelectionModel().select(view.messageTab);
-        String s = this.model.help();
-        view.labelMessage.setText(s);
+        this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
+        this.view.getLabelMessage().setText(this.model.help());
     }
     
+    @FXML
     public void look(){
-        view.tabPane.getSelectionModel().select(view.messageTab);
-        view.labelMessage.setText(this.model.look());
+        this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
+        this.view.getLabelMessage().setText(this.model.look());
     }
     
+    @FXML
     public void quit(){
         myHero.beAttacked(-1);
     }
  
     
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         Image image = new Image("view/img/border.jpg");
-        view.gridPane.setBackground(
+        this.view.getGridPane().setBackground(
             new Background(
                 new BackgroundImage(image,
                     BackgroundRepeat.REPEAT,
@@ -101,26 +99,24 @@ public class GameController {
             )
         );
             
-        view.root.addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
+        this.view.getRoot().addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
             moveHomer(event);
-        });
-        view.hpBar.progressProperty().bind(model.hpProperty());
-        
+        });        
         syncRoom();   
     }
     
     public void addInventory(ImageView img){
-        view.vboxInventory.getChildren().add(img);
+        this.view.getVboxInventory().getChildren().add(img);
     }
     
     public void syncRoom(){
-        view.gridPane.getChildren().removeAll(view.gridPane.getChildren());
-        view.topLabel.setText(""+ myHero.getCurrentRoom());
+        this.view.getGridPane().getChildren().removeAll(this.view.getGridPane().getChildren());
+        this.view.getTopLabel().setText(""+ myHero.getCurrentRoom());
         syncDoors();
         
         if(!(myHero.getCurrentRoom().isLigth)){
             Image image = new Image("view/img/border.png");
-            view.gridPane.setBackground(
+            this.view.getGridPane().setBackground(
                 new Background(
                     new BackgroundImage(image,
                         BackgroundRepeat.REPEAT,
@@ -128,6 +124,7 @@ public class GameController {
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT)
                 )
+                
             );
             return;
         }
@@ -136,19 +133,18 @@ public class GameController {
         syncCharacters();
         
         
-        view.gridPane.getChildren().remove(view.homer);
-        view.gridPane.add(view.homer, model.getX(), model.getY());
+        this.view.getGridPane().getChildren().remove(this.view.getHomer());
+        this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());
         
-        for (Node node : view.gridPane.getChildren()) {
-            GridPane.setHalignment(node, HPos.CENTER);
+        for (Node node : this.view.getGridPane().getChildren()) {
+            this.view.getGridPane().setHalignment(node, HPos.CENTER);
         }
         
     }
     
-    private void syncObjects(){
+    public void syncObjects(){
         List<MyObject> objects = myHero.getCurrentRoom().getObjects();
         for (MyObject object : objects) {
-            
             ImageView img = object.getImg();
             Tooltip tooltip = new Tooltip("Look : " + object.descriptif());
             Tooltip.install(img, tooltip);
@@ -166,8 +162,8 @@ public class GameController {
             
             img.setOnMouseClicked(e -> {
                 this.myHero.take(object.toString());
-                view.gridPane.getChildren().remove(img);
-                view.addInventory(img);
+                this.view.getGridPane().getChildren().remove(img);
+                this.addInventory(img);
                 
                 img.setOnMouseClicked(event -> {
                     myHero.use(object.toString());
@@ -175,12 +171,11 @@ public class GameController {
             });
             
             img.setCursor(Cursor.HAND);
-            view.gridPane.add(img, object.getX(), object.getY());
-            System.out.println("j'ajoute un "+ object + " à la position [ " + object.getX() + " , " + object.getY() + " ]");
+            this.view.getGridPane().add(img, object.getX(), object.getY());
         }
     }
     
-    private void syncCharacters(){
+    public void syncCharacters(){
         List<MyCharacter> characters = myHero.getCurrentRoom().getCharacters();
         
         for (MyCharacter ch : characters) {
@@ -199,12 +194,14 @@ public class GameController {
                         myHero.talk();
                     });
                 }
-                view.gridPane.add(img, ch.getX(), ch.getY());
+          
+            
+                this.view.getGridPane().add(img, ch.getX(), ch.getY());
             }
         }
     }
     
-    private void syncDoors(){
+    public void syncDoors(){
         List<Door> doors = myHero.getCurrentRoom().getDoors();
         
         for (Door door : doors) {
@@ -220,27 +217,23 @@ public class GameController {
                 this.syncRoom();
             });
             if(door.room[1].equals(myHero.getCurrentRoom())){
-                view.gridPane.add(img, 4 - door.getX(), 4 - door.getY());
+                this.view.getGridPane().add(img, 4 - door.getX(), 4 - door.getY());
             } else {
-                view.gridPane.add(img, door.getX(), door.getY());
-            }
-                
-            
-            
-            
+                this.view.getGridPane().add(img, door.getX(), door.getY());
+            }  
         }
     }
     
     public void show(String text){
-        view.topLabel.setText(text);
+        this.view.getTopLabel().setText(text);
     }
     
     public void showMessage(String text){
         
-        view.tabPane.getSelectionModel().select(view.messageTab);
-        String newText = view.labelMessage.getText() + "\n ------------------------------\n" + text;
-        view.labelMessage.setText(newText);
-    }
+        this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
+        String newText = this.view.getLabelMessage().getText() + "\n ------------------------------\n" + text;
+        this.view.getLabelMessage().setText(newText);
+    }   
     
     public SimpleDoubleProperty getHpProperty(){
         return model.hpProperty();

@@ -19,16 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root"
-            maxHeight="-Infinity"
-            maxWidth="-Infinity" 
-            minHeight="-Infinity" 
-            minWidth="-Infinity" 
-            prefHeight="603.0" 
-            prefWidth="869.0" 
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="view.myController"
->
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="869.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.GameView">
    <right>
       <VBox fx:id="rightVBox" prefHeight="603.0" prefWidth="331.0" style="-fx-border-color: #000;" BorderPane.alignment="CENTER">
          <children>

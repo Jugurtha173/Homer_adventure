@@ -33,8 +33,20 @@ public class SecretCodeDoor extends AutoLockDoor{
     }
     
     public void unLock(){
-        super.unLock();
-        super.open();
+    	GameModel.show("Tape the code to unlock : ");
+        Scanner code = new Scanner(System.in);
+        
+        if(code.hasNextInt()){
+	        if(code.nextInt() == this.SECRET_CODE) {
+	        	super.unLock();
+	        	super.open();
+	        } else {
+	        	System.err.println("CODE INCORRECT !!!");        	
+	        }
+        }
+        else {
+        	System.err.println("Waiting for a digit code");
+        }
     }
 
 }

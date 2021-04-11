@@ -228,7 +228,6 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 			this.inventory.remove(obj);
 			this.getCurrentRoom().addObject(obj);
 			GameModel.show(object + " dropped");
-                        GameModel.controller.syncRoom();
 		}
 		
 	}

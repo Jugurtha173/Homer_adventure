@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -19,45 +20,34 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import controller.GameController;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-
 /**
  *
  * @author JUGURTHA
  */
-public class GameView implements Initializable{
-    
-    @FXML public BorderPane root;
-    @FXML public VBox rightVBox;
-    @FXML public GridPane gridPane;
-    @FXML public ImageView homer;
-    @FXML public Button lookBtn;
-    @FXML public Button helpBtn;
-    @FXML public Button quitBtn;
-    @FXML public TabPane tabPane;
-    @FXML public Tab mapTab;
-    @FXML public Tab inventoryTab;
-    @FXML public Tab messageTab;
-    @FXML public Label labelMessage;
-    @FXML public Label topLabel;
-    @FXML public ProgressBar hpBar;
-    @FXML public VBox vboxInventory;
-    
-    public GameController controller;
-    
-    public GameView(GameController controller){
+public class GameView implements Initializable { 
+    @FXML BorderPane root;
+    @FXML VBox rightVBox;
+    @FXML GridPane gridPane;
+    @FXML ImageView homer;
+    @FXML Button lookBtn;
+    @FXML Button helpBtn;
+    @FXML Button quitBtn;
+    @FXML TabPane tabPane;
+    @FXML Tab mapTab;
+    @FXML Tab inventoryTab;
+    @FXML Tab messageTab;
+    @FXML Label labelMessage;
+    @FXML Label topLabel;
+    @FXML ProgressBar hpBar;
+    @FXML VBox vboxInventory;
+    GameController controller;
+    public void setController(GameController controller){
         this.controller = controller;
     }
-  
+     
     @FXML
     public void moveHomer(KeyEvent e ) {
-        controller.moveHomer(e);
+        controller.moveHomer(e);      
     }
     
     @FXML
@@ -78,7 +68,9 @@ public class GameView implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("ouiiiiiiiiiiiiiiiiiii");
+        this.controller = new GameController(this);
+        controller.initialize(url, rb);
+        this.hpBar.progressProperty().bind(controller.getHpProperty());
     }
     
     public void addInventory(ImageView img){
@@ -86,7 +78,19 @@ public class GameView implements Initializable{
     }
     
     public void syncRoom(){
-        controller.syncRoom();        
+        controller.syncRoom();
+    }
+    
+    public void syncObjects(){
+        controller.syncObjects();
+    }
+    
+    public void syncCharacters(){
+        controller.syncCharacters();
+    }
+    
+    public void syncDoors(){
+        controller.syncDoors();
     }
     
     public void show(String text){
@@ -95,7 +99,70 @@ public class GameView implements Initializable{
     
     public void showMessage(String text){
         controller.showMessage(text);
-        
+    }
+    
+    public BorderPane getRoot() {
+        return root;
+    }
+
+    public VBox getRightVBox() {
+        return rightVBox;
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
+    }
+
+    public ImageView getHomer() {
+        return homer;
+    }
+
+    public Button getLookBtn() {
+        return lookBtn;
+    }
+
+    public Button getHelpBtn() {
+        return helpBtn;
+    }
+
+    public Button getQuitBtn() {
+        return quitBtn;
+    }
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public Tab getMapTab() {
+        return mapTab;
+    }
+
+    public Tab getInventoryTab() {
+        return inventoryTab;
+    }
+
+    public Tab getMessageTab() {
+        return messageTab;
+    }
+
+    public Label getLabelMessage() {
+        return labelMessage;
+    }
+
+    public Label getTopLabel() {
+        return topLabel;
+    }
+
+    public ProgressBar getHpBar() {
+        return hpBar;
+    }
+
+    public VBox getVboxInventory() {
+        return vboxInventory;
+    }
+
+    public GameController getController() {
+        return controller;
     }
     
 }

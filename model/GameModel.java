@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import model.characters.Hero;
 import model.myObjects.MyObject;
 import model.environement.NuclearCentral;
+import view.GameView;
 
 /**
  *
@@ -19,12 +20,18 @@ import model.environement.NuclearCentral;
 public class GameModel {
     
     public static GameController controller;
+    public static GameView view;
     NuclearCentral nc = new NuclearCentral();
     Hero homer = new Hero("Homer");
     
     public GameModel(GameController controller){
         this.nc.init(homer);
         GameModel.controller = controller;
+    }
+    
+    public GameModel(GameView view){
+        this.nc.init(homer);
+        GameModel.view = view;
     }
     
     public NuclearCentral getNuclearCentral(){
@@ -73,6 +80,6 @@ public class GameModel {
     }
     
     public static void showMessage(String s) {
-        controller.showMessage(s);
+        GameModel.controller.showMessage(s);
     }
 }
