@@ -9,6 +9,7 @@ import controller.GameController;
 import java.util.List;
 import javafx.beans.property.SimpleDoubleProperty;
 import model.characters.Hero;
+import model.characters.Other;
 import model.myObjects.MyObject;
 import model.environement.NuclearCentral;
 import view.GameView;
@@ -81,5 +82,9 @@ public class GameModel {
     
     public static void showMessage(String s) {
         GameModel.controller.showMessage(s);
+    }
+    
+    public static void talk(Other other){
+        controller.talk(other);
     }
 }

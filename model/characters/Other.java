@@ -4,13 +4,19 @@ import model.myObjects.MyObject;
 import model.myObjects.Parchment;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import javafx.scene.control.TextInputDialog;
 import model.GameModel;
 
 
 public class Other extends MyCharacter implements Talkable{
 
-	public final List<String> speechs = new ArrayList<>();
+    public final List<String> speechs = new ArrayList<>();
+
+    public String getCondition() {
+        return condition;
+    }
 	private String condition = "yes";
 	Scanner interact = new Scanner(System.in);
 	
@@ -36,11 +42,15 @@ public class Other extends MyCharacter implements Talkable{
 		this.speechs.add(speech2);
 		this.speechs.add(speech3);
 	}
+        
+        public List<String> getSpeechs() {
+            return speechs;
+        }
 
 
 	@Override
 	public void talkTo(Talkable t) {
-            GameModel.showMessage(this.speechs.get(0));
+            
             if (this.getName().equalsIgnoreCase("Lisa")) 
                     this.talkToLisa(t);
             else
@@ -48,16 +58,13 @@ public class Other extends MyCharacter implements Talkable{
                     this.talkToBurns(t);
 
             else {
-                    if (condition.equalsIgnoreCase(interact.nextLine().split(" ")[0])) {
-                            GameModel.showMessage(this.speechs.get(1));
-                            this.dropAllInventory();
-                    } else {
-                            GameModel.showMessage(this.speechs.get(2));
-                    }
-            }		
-	}
+                GameModel.talk(this);
+	
+            }
+        }
 	
 	public void talkToLisa(Talkable t) {
+            GameModel.showMessage(this.speechs.get(0));
 		List<MyObject> inv = ((MyCharacter)t).inventory;
 		for(MyObject obj : inv) {
 			if(obj instanceof Parchment) {
@@ -72,32 +79,39 @@ public class Other extends MyCharacter implements Talkable{
 	}
 	
 	public void talkToBurns(Talkable t) {
-		int note = this.interact.nextInt();
-		if(note < 7) {
-			GameModel.showMessage("-Burns : REALLY ? (-_-)\n"
-					+ "-Samuel : OK OK je rigole je comptais pas leur mettre une salle note de toutes facons\n"
-					+ "        : je vais revoir ma note a la hausse, aller\n");
-			talkToBurns(t);
-		} else {
-			if(note >= 7 && note < 15) {
-				GameModel.showMessage("-Burns : OHHHHH honestly, don't they deserve more ?\n"
-								 + "        I will give you only one digit : '1***'\n"
-								 + "-Samuel : Mmmmmmm, c'est vrai qu'ils meritent plus...\n");
-				talkToBurns(t);
-			} else {
-				if(note >= 15 && note < 18) {
-					GameModel.showMessage("-Burns : frankly, it touches me thank you\n"
-									 + "+ \"        I will give you three digit : '170*'\n"
-									 + "-Samuel : Okayyy, ils abusent un peu je trouve\n"
-									 + "        Mais c'est vrai que c'est bien foutu, aller je leurs met un 20/20\n");
-					talkToBurns(t);
-				} else {
-					GameModel.showMessage("-Burns : WAAAAAW, you're the best Samuel ;) \n"
-							 		 + "        Take the code : '1703'\n"
-							 		 + "-Samuel : Tres bien, finissons-en (c'etait cool GG)\n");
-				}
-			}
-		}
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Talk with Burns");
+            dialog.setContentText(this.speechs.get(0));
+            
+            Optional<String> result = dialog.showAndWait();
+            int note = Integer.parseInt(result.get());  
+            
+            if(note < 7) {
+                dialog.setContentText("-Burns : REALLY ? (-_-)\n"
+                                    + "-Samuel : OK OK je rigole je comptais pas leur mettre une salle note de toutes facons\n"
+                                    + "        : je vais revoir ma note a la hausse, aller\n");
+                dialog.showAndWait();
+            } else {
+                if(note >= 7 && note < 15) {
+                    dialog.setContentText("-Burns : OHHHHH honestly, don't they deserve more ?\n"
+                                        + "        I will give you only one digit : '1***'\n"
+                                        + "-Samuel : Mmmmmmm, c'est vrai qu'ils meritent plus...\n");
+                    dialog.showAndWait();
+                } else {
+                    if(note >= 15 && note < 18) {
+                        dialog.setContentText("-Burns : frankly, it touches me thank you\n"
+                                            + "+ \"        I will give you three digit : '170*'\n"
+                                            + "-Samuel : Okayyy, ils abusent un peu je trouve\n"
+                                            + "        Mais c'est vrai que c'est bien foutu, aller je leurs met un 20/20\n");
+                        dialog.showAndWait();
+                    } else {
+                        dialog.setContentText("-Burns : WAAAAAW, you're the best Samuel ;) \n"
+                                            + "        Take the code : '1703'\n"
+                                            + "-Samuel : Tres bien, finissons-en (c'etait cool GG)\n");
+                    }
+                }
+            }
+		
 	}
     
 }

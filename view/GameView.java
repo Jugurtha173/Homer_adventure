@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
@@ -36,11 +37,15 @@ public class GameView implements Initializable {
     @FXML Tab mapTab;
     @FXML Tab inventoryTab;
     @FXML Tab messageTab;
-    @FXML Label labelMessage;
+    @FXML VBox labelMessage;
     @FXML Label topLabel;
     @FXML ProgressBar hpBar;
     @FXML VBox vboxInventory;
+    @FXML ScrollPane scrollMessages;
+
+    
     GameController controller;
+    
     public void setController(GameController controller){
         this.controller = controller;
     }
@@ -145,12 +150,16 @@ public class GameView implements Initializable {
         return messageTab;
     }
 
-    public Label getLabelMessage() {
+    public VBox getLabelMessage() {
         return labelMessage;
     }
 
     public Label getTopLabel() {
         return topLabel;
+    }
+    
+    public ScrollPane getScrollMessages() {
+        return scrollMessages;
     }
 
     public ProgressBar getHpBar() {

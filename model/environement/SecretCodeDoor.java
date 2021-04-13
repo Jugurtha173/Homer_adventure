@@ -1,6 +1,8 @@
 package model.environement;
 
+import java.util.Optional;
 import java.util.Scanner;
+import javafx.scene.control.TextInputDialog;
 import model.GameModel;
 
 public class SecretCodeDoor extends AutoLockDoor{
@@ -33,7 +35,24 @@ public class SecretCodeDoor extends AutoLockDoor{
     }
     
     public void unLock(){
-    	GameModel.show("Tape the code to unlock : ");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Secret code door");
+        dialog.setHeaderText("Tape the code !");
+        dialog.setContentText("Please enter the code:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.get().equals(""+ this.SECRET_CODE)){
+            System.out.println(result.get() + " equals " + this.SECRET_CODE);
+            super.unLock();
+            super.open();
+        } else{
+            System.out.println(result.get() + " not equals " + this.SECRET_CODE);
+            GameModel.showMessage("CODE INCORRECT !!!");
+        }
+	    
+
+    	/*GameModel.show("Tape the code to unlock : ");
         Scanner code = new Scanner(System.in);
         
         if(code.hasNextInt()){
@@ -46,7 +65,7 @@ public class SecretCodeDoor extends AutoLockDoor{
         }
         else {
         	System.err.println("Waiting for a digit code");
-        }
+        }*/
     }
 
 }

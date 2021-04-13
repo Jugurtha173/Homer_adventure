@@ -1,6 +1,5 @@
 package model.environement;
 
-import controller.GameController;
 import model.characters.Talkable;
 import model.characters.Hero;
 import model.characters.Enemy;
@@ -19,7 +18,6 @@ import model.myObjects.Parchment;
 import model.myObjects.Barrel;
 import java.util.ArrayList;
 import java.util.List;
-import model.GameModel;
 
 public class NuclearCentral {
 	
