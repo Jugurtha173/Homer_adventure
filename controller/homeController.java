@@ -28,8 +28,7 @@ public class homeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
          startBtn.setOnAction( event -> {
-            Stage currentStage = (Stage) startBtn.getScene().getWindow();
-            currentStage.close();
+            ((Stage) startBtn.getScene().getWindow()).close();
             SwitchStage myStage = new SwitchStage("view/game.fxml");
             myStage.show();
         });

@@ -1,5 +1,9 @@
 package model.environement;
 
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import model.GameModel;
 
 public class AutoLockDoor extends Door {
@@ -21,9 +25,15 @@ public class AutoLockDoor extends Door {
     @Override
     public void open(){
         if( !(this.lock) ) {
-        	super.open();
+            super.open();
         } else { 
-        	GameModel.show("The door is locked! Use key to unlock.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("NOPE !");
+            alert.setHeaderText("This door is locked!");
+            alert.setContentText("Use a key to unlock.");
+            ButtonType buttonTypeOk = new ButtonType("Ok", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonTypeOk);
+            alert.showAndWait();
         	
         }
     }

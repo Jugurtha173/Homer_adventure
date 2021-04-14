@@ -1,5 +1,8 @@
 package model.environement;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import model.GameModel;
 
 public class ClosedDoor extends Door{
@@ -21,7 +24,13 @@ public class ClosedDoor extends Door{
     
     @Override
     public void open(){
-        GameModel.show("This door is closed, you can't open it !");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("NOPE !");
+        alert.setHeaderText("This door is closed");
+        alert.setContentText("You can't open it !");
+        ButtonType buttonTypeOk = new ButtonType("Ok", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeOk);
+        alert.showAndWait();
     }
     
 }

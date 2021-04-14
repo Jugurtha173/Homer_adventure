@@ -5,12 +5,12 @@
  */
 package controller;
 
+import javafx.application.Platform;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -31,14 +31,12 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import model.GameModel;
-import javafx.scene.control.PopupControl;
 import javafx.scene.layout.GridPane;
 import model.characters.Attackable;
 import model.characters.Enemy;
 import model.characters.Hero;
 import model.characters.MyCharacter;
 import model.characters.Other;
-import model.characters.Talkable;
 import model.environement.Door;
 import model.myObjects.MyObject;
 import view.GameView;
@@ -48,8 +46,6 @@ import view.GameView;
  */
 public class GameController implements Initializable {
     
-
-
     public GameModel model;
     GameView view;
     Hero myHero;
@@ -61,6 +57,25 @@ public class GameController implements Initializable {
         this.myHero = model.getHomer();
     }
   
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {   
+        Image image = new Image("view/img/border.jpg");
+        this.view.getGridPane().setBackground(
+            new Background(
+                new BackgroundImage(image,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT)
+            )
+        );
+            
+        this.view.getRoot().addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
+            moveHomer(event);
+        });
+        
+        syncRoom();   
+    }
     
     @FXML
     public void moveHomer(KeyEvent e ) {
@@ -80,43 +95,40 @@ public class GameController implements Initializable {
     @FXML
     public void help(){
         this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
-        this.showMessage(this.model.help());
+        this.showMessage(this.model.help(), "F4D03F ");
     }
     
     @FXML
     public void look(){
         this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
-        this.showMessage(this.model.look());
+        this.showMessage(this.model.look(), "#AEB6BF");
     }
     
     @FXML
     public void quit(){
-        myHero.beAttacked(-1);
-    }
- 
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        Image image = new Image("view/img/border.jpg");
-        this.view.getGridPane().setBackground(
-            new Background(
-                new BackgroundImage(image,
-                    BackgroundRepeat.REPEAT,
-                    BackgroundRepeat.REPEAT,
-                    BackgroundPosition.CENTER,
-                    BackgroundSize.DEFAULT)
-            )
-        );
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Really ? I'm always hungry, you want to RAGE QUIT ?");
+
+        ButtonType buttonTypeQuit = new ButtonType("QUIT");
+        ButtonType buttonTypeStay = new ButtonType("STAY", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeQuit, buttonTypeStay);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeQuit){
+            Platform.exit();
+            System.exit(0);
+        } else {
+            this.show("Thank you ! We go back");
+        }
             
-        this.view.getRoot().addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
-            moveHomer(event);
-        });        
-        syncRoom();   
+        
+        
+        myHero.quit();
     }
-    
+   
     public void addInventory(ImageView img){
-        this.view.getVboxInventory().getChildren().add(img);
+        this.view.getFlowInventory().getChildren().add(img);
     }
     
     public void syncRoom(){
@@ -156,19 +168,19 @@ public class GameController implements Initializable {
         List<MyObject> objects = myHero.getCurrentRoom().getObjects();
         for (MyObject object : objects) {
             ImageView img = object.getImg();
-            Tooltip tooltip = new Tooltip("Look : " + object.descriptif());
+            Tooltip tooltip = new Tooltip();
             Tooltip.install(img, tooltip);
             
             img.setOnMouseEntered(e -> {
                 img.scaleXProperty().setValue(1.7);
                 img.scaleYProperty().setValue(1.7);
+                tooltip.setText(object.descriptif());
                 
             });
             
             img.setOnMouseExited(e -> {
                 img.scaleXProperty().setValue(1);
                 img.scaleYProperty().setValue(1);
-                PopupControl pop = new PopupControl();
             });
             
             img.setOnMouseClicked(e -> {
@@ -178,6 +190,7 @@ public class GameController implements Initializable {
                 
                 img.setOnMouseClicked(event -> {
                     myHero.use(object.toString());
+                    this.syncRoom();
                 });
             });
             
@@ -239,17 +252,18 @@ public class GameController implements Initializable {
         this.view.getTopLabel().setText(text);
     }
     
-    public void showMessage(String text){
+    public void showMessage(String text, String color){
         
         this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());        
         Label newMessage = new Label(text);
-        newMessage.setStyle("-fx-background-color: lightblue;");
+        newMessage.setStyle("-fx-background-color: "+ color + ";-fx-padding: 7");
+        newMessage.setWrapText(true);
         this.view.getLabelMessage().getChildren().add(newMessage);
-        this.view.getScrollMessages().setVvalue(1);
-    }   
+        this.view.getScrollMessages().setVvalue(1.0);
+    }
     
-    public SimpleDoubleProperty getHpProperty(){
-        return model.hpProperty();
+    public void showMessage(String text){
+        this.showMessage(text, "#5DADE2");
     }
     
     public void talk(Other other){
@@ -257,23 +271,29 @@ public class GameController implements Initializable {
         alert.setContentText(other.getSpeechs().get(0));
 
         ButtonType buttonTypeYes = new ButtonType(other.getCondition());
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
+        ButtonType buttonTypeNo = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeBye = new ButtonType("Bye", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeYes){
             other.dropAllInventory();
             alert.getButtonTypes().remove(buttonTypeYes);
+            alert.getButtonTypes().remove(buttonTypeNo);
+            alert.getButtonTypes().setAll(buttonTypeBye);
             alert.setContentText(other.getSpeechs().get(1));
             alert.showAndWait();
         } else {
             alert.getButtonTypes().remove(buttonTypeYes);
+            alert.getButtonTypes().remove(buttonTypeNo);
+            alert.getButtonTypes().setAll(buttonTypeBye);
             alert.setContentText(other.getSpeechs().get(2));
             alert.showAndWait();
         }
         this.syncRoom();
     }
     
-    
+    public SimpleDoubleProperty getHpProperty(){
+        return model.hpProperty();
+    }
 }

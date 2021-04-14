@@ -47,7 +47,7 @@ public class Enemy extends MyCharacter implements Attackable{
 
 
             detail += "% HP, you must kill him before !";
-            GameModel.show(detail);
+            GameModel.showMessage(detail, "#E74C3C");
     }
 
     @Override

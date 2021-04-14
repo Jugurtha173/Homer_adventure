@@ -84,6 +84,10 @@ public class GameModel {
         GameModel.controller.showMessage(s);
     }
     
+    public static void showMessage(String s, String color) {
+        GameModel.controller.showMessage(s, color);
+    }
+    
     public static void talk(Other other){
         controller.talk(other);
     }

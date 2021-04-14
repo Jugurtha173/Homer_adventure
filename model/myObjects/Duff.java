@@ -42,7 +42,7 @@ public class Duff extends MyObject{
 		
 	}
 	
-	public Duff getNextEmptyDuff(MyCharacter c) {
+	public static Duff getNextEmptyDuff(MyCharacter c) {
 		for(MyObject obj : c.inventory)
 			if(obj instanceof Duff && ((Duff) obj).isEmpty())
 				return (Duff)obj;
@@ -56,16 +56,16 @@ public class Duff extends MyObject{
 	public void use(MyCharacter c) {
 		Duff duff;
 		if(this.full) 
-			duff = this;
+                    duff = this;
 		else 
-			duff = getNextFullDuff(c);
+                    duff = getNextFullDuff(c);
 
 		if(duff == null) {	
-			return;
+                    return;
 		} else {
-			GameModel.show("Drinkink duff ... YES !");
-			c.editHP(duff.getHealthEffect());
-			duff.full = false;
+                    GameModel.show("Drinkink duff ... YES !");
+                    c.editHP(duff.getHealthEffect());
+                    duff.full = false;
 		}
 	}
 }

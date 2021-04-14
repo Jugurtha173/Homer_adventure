@@ -18,7 +18,18 @@ public class Barrel extends MyObject {
 
 	@Override
 	public void use(MyCharacter c) {
-		GameModel.show("You can fill "+ this.level +" duff bottles with this barrel (USE Duff Barrel)");
+            if(this.level <= 0) {
+                    GameModel.show("Barrel is empty, can't fill");
+                    return;
+		}
+            // Remplire la premiere bouteille de duff vide dand l'inventaire
+            Duff nextEmptyDuff = Duff.getNextEmptyDuff(c);
+            if(nextEmptyDuff != null) {
+                    nextEmptyDuff.fill();
+                    this.level--;
+                    return;
+            }
+            GameModel.show("You can fill "+ this.level +" duff bottles with this barrel");
 	}
 	
 	public void use(MyCharacter c, MyObject duff) {
@@ -31,8 +42,8 @@ public class Barrel extends MyObject {
 			GameModel.show("Barrel can fill only empty duff bottles");
 			return;
 		}		
-		// Remplire la premiere bouteillr de duff vide dand l'inventaire
-		Duff nextEmptyDuff = ((Duff) duff).getNextEmptyDuff(c);
+		// Remplire la premiere bouteille de duff vide dand l'inventaire
+		Duff nextEmptyDuff = Duff.getNextEmptyDuff(c);
 		if(nextEmptyDuff != null) {
 			nextEmptyDuff.fill();
 			this.level--;			

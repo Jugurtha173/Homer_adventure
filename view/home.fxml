@@ -5,10 +5,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="396.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.homeController">
    <children>
-      <ImageView fitHeight="406.0" fitWidth="616.0" layoutX="-7.0" layoutY="-9.0">
+      <ImageView fitHeight="406.0" fitWidth="616.0" layoutX="-7.0" layoutY="-9.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="-10.0" AnchorPane.rightAnchor="-10.0" AnchorPane.topAnchor="-10.0">
          <image>
             <Image url="@img/springfield_nuclear_power_plant2.png" />
          </image>

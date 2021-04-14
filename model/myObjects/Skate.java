@@ -1,6 +1,6 @@
 package model.myObjects;
 
-import model.GameModel;
+import model.characters.Hero;
 import model.characters.MyCharacter;
 
 
@@ -21,6 +21,6 @@ public class Skate extends MyObject{
 
     @Override
     public void use(MyCharacter c) {
-            GameModel.show(this.descriptif());	
+            ((Hero)c).attack(((Hero)c).enemyInRoom(), this);	
     }
 }

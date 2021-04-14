@@ -19,6 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 /**
@@ -40,7 +41,7 @@ public class GameView implements Initializable {
     @FXML VBox labelMessage;
     @FXML Label topLabel;
     @FXML ProgressBar hpBar;
-    @FXML VBox vboxInventory;
+    @FXML FlowPane flowInventory;
     @FXML ScrollPane scrollMessages;
 
     
@@ -166,8 +167,8 @@ public class GameView implements Initializable {
         return hpBar;
     }
 
-    public VBox getVboxInventory() {
-        return vboxInventory;
+    public FlowPane getFlowInventory() {
+        return flowInventory;
     }
 
     public GameController getController() {

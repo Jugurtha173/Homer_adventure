@@ -84,8 +84,7 @@ public class Room {
 	//indique dans quelle salle sommes nous
 	@Override
 	public String toString() {
-		
-		return "Your are in the " + this.name + "\n";
+            return "You are in the " + this.name + "\n";
 	}
     
 	//affiche un descriptif de la salle

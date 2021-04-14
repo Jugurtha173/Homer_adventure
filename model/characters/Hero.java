@@ -2,23 +2,13 @@ package model.characters;
 
 import java.util.List;
 import java.util.Scanner;
-import javafx.beans.property.IntegerProperty;
 import javafx.scene.image.ImageView;
 import model.GameModel;
-import model.characters.Attackable;
 import model.myObjects.Barrel;
-import model.characters.MyCharacter;
 import model.myObjects.Donuts;
 import model.environement.Door;
-import model.environement.Door;
-import model.characters.Enemy;
-import model.environement.NuclearCentral;
-import model.environement.NuclearCentral;
 import model.myObjects.MyObject;
-import model.characters.Other;
 import model.environement.Room;
-import model.environement.Room;
-import model.characters.Talkable;
 
 /**
  *
@@ -37,7 +27,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
     private boolean cheat = false;
 	
 	public Hero(String name) {
-		super(name, "view/img/homer.gif");
+            super(name, "view/img/homer.gif");
 	}
 	
         public int getX(){
@@ -139,7 +129,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 			// si il n'y a pas d'ennemie ou que l'ennemie est mort
 			Enemy target = this.enemyInRoom();
 			if(target != null && !(target.isAlive())) {
-				GameModel.show("No ennemy alive here ! you can go ");
+				GameModel.show("No enemy alive here ! you can go ");
 				break;
 			}
 				
@@ -183,8 +173,8 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 				door.open();
 				// on entre dans la Room si elle est ouverte
 				if(door.isState()) {
-					this.changeRoom(r);
-					door.close();
+                                    this.changeRoom(r);
+                                    door.close();
 				}
 				// on regarde ou on a att�rit
 				//this.look();
@@ -240,7 +230,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 	
 	//test si une salle est eclairee ou non
 	public boolean isCurrentLight() {
-			return this.getCurrentRoom().isLigth;
+            return this.getCurrentRoom().isLigth;
 		
 	}
 	
@@ -267,7 +257,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 	public void use(String object) {
 		MyObject obj = findObjectInventory(object);
 		if(obj != null) {
-			obj.use(this);
+                    obj.use(this);
 		}
 	}
 	
@@ -350,21 +340,24 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 	
 	// commande help  affiche la liste de commandes disponibles
 	public String help() {
-		return "MENU \n"
-                        +"inventory: 	         Show the inventory\n"
-                        +"talk:                    Talk with other persons in the room(Not enemies)\n"
-                        +"use: 		         Use an object in your inventory (you'll choose which one)\n"
-                        +"use object:	         Use the object (if it contains in inventory)\n"
-                        +"use object1 object2:	 Use the object with the other one (ex. 'use barrel duff' to refill duff)\n"
-                        +"take object:   	         Take an object\n"
-                        +"drop object:   	         Drop an object from your inventory to the room\n"
-                        +"look:     	         See everything around you in the room\n"
-                        +"look object:  	         To know more about the object\n"
-                        +"attack:        	         Attack the enemy in the room (if you inventory is empty, you'll punch him)\n"
-                        +"attack object:        	 Attack the enemy in the room with the object (if you have not the object, you'll punch him)\n"
-                        +"go room:  	         Go in other room (if you can)\n"
-                        +"quit:    	         Exit the game\n"
-                ;
+            return ""
+                +"talk:\n"
+                + "Click on a persons to talk with him (Not enemies)\n\n"
+                +"use object:\n"
+                + "Click on object in the inventory to use it )\n\n"
+                +"take object:\n"
+                + "Click on object in the room to take it\n\n"
+                +"look:\n"
+                + "Click on the eye button to see everything around you in the room\n\n"
+                +"look object:\n"
+                + "Hover on object to know more about it\n\n"
+                +"attack:\n"
+                + "Click on an enemy to attack him \n\n"
+                +"go room:\n"
+                + "Click on a door to go in other room (if you can)\n\n"
+                +"quit:\n"
+                + "Click on the bottom right button to exit the game\n\n"
+            ;
 
 	}
 	
@@ -411,14 +404,17 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 
 	@Override
 	public void attack(Attackable target, MyObject object) {
-		if (object == null) {
-			GameModel.showMessage("let's punch him");
-			target.beAttacked(-1);
-		} else {
-			target.beAttacked(object.getHealthEffect());
-			//this.drop(object);
-		}
-                GameModel.showMessage(((MyCharacter)target).getName() + " HP : " + ((MyCharacter)target).getHP() );
+            if(target == null){
+                GameModel.show("No enemy to attack");
+                return;
+            }
+            if (object == null) {
+                    target.beAttacked(-1);
+            } else {
+                    target.beAttacked(object.getHealthEffect());
+                    this.drop(object.toString());
+            }
+            GameModel.showMessage(((MyCharacter)target).getName() + " HP : " + ((MyCharacter)target).getHP(), "#E9967A" );
 		
 	}
 	

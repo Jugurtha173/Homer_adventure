@@ -1,5 +1,6 @@
 package model.myObjects;
 
+import model.GameModel;
 import model.characters.MyCharacter;
 
 public class Donuts extends MyObject{
@@ -16,8 +17,7 @@ public class Donuts extends MyObject{
 
 	@Override
 	public void use(MyCharacter c) {
-		System.out.println("GOOD GAME");
-		
+            GameModel.show("GOOD GAME");	
 	}
 
 	
