@@ -42,12 +42,10 @@ public class SecretCodeDoor extends AutoLockDoor{
 
         // Traditional way to get the response value.
         Optional<String> result = dialog.showAndWait();
-        if (result.get().equals(""+ this.SECRET_CODE)){
-            System.out.println(result.get() + " equals " + this.SECRET_CODE);
+        if (result.get() != null && result.get().equals(""+ this.SECRET_CODE)){
             super.unLock();
             super.open();
         } else{
-            System.out.println(result.get() + " not equals " + this.SECRET_CODE);
             GameModel.showMessage("CODE INCORRECT !!!");
         }
 	    

@@ -84,32 +84,15 @@ public class Other extends MyCharacter implements Talkable{
             dialog.setContentText(this.speechs.get(0));
             
             Optional<String> result = dialog.showAndWait();
-            int note = Integer.parseInt(result.get());  
+            Float note = Float.parseFloat(result.get());  
             
-            if(note < 7) {
-                dialog.setContentText("-Burns : REALLY ? (-_-)\n"
-                                    + "-Samuel : OK OK je rigole je comptais pas leur mettre une salle note de toutes facons\n"
-                                    + "        : je vais revoir ma note a la hausse, aller\n");
+            if(note >= 17) {
+                dialog.setContentText(this.speechs.get(1));
                 dialog.showAndWait();
             } else {
-                if(note >= 7 && note < 15) {
-                    dialog.setContentText("-Burns : OHHHHH honestly, don't they deserve more ?\n"
-                                        + "        I will give you only one digit : '1***'\n"
-                                        + "-Samuel : Mmmmmmm, c'est vrai qu'ils meritent plus...\n");
-                    dialog.showAndWait();
-                } else {
-                    if(note >= 15 && note < 18) {
-                        dialog.setContentText("-Burns : frankly, it touches me thank you\n"
-                                            + "+ \"        I will give you three digit : '170*'\n"
-                                            + "-Samuel : Okayyy, ils abusent un peu je trouve\n"
-                                            + "        Mais c'est vrai que c'est bien foutu, aller je leurs met un 20/20\n");
-                        dialog.showAndWait();
-                    } else {
-                        dialog.setContentText("-Burns : WAAAAAW, you're the best Samuel ;) \n"
-                                            + "        Take the code : '1703'\n"
-                                            + "-Samuel : Tres bien, finissons-en (c'etait cool GG)\n");
-                    }
-                }
+                System.out.println("la");
+                dialog.setContentText(this.speechs.get(2));
+                dialog.showAndWait();
             }
 		
 	}

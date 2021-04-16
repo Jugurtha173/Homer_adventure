@@ -49,6 +49,7 @@ public class GameController implements Initializable {
     public GameModel model;
     GameView view;
     Hero myHero;
+    final int gridSize = 4;
     
     public GameController(GameView view){
         this.model = new GameModel(this);
@@ -241,7 +242,7 @@ public class GameController implements Initializable {
                 this.syncRoom();
             });
             if(door.room[1].equals(myHero.getCurrentRoom())){
-                this.view.getGridPane().add(img, 4 - door.getX(), 4 - door.getY());
+                this.view.getGridPane().add(img, gridSize - door.getX(), gridSize - door.getY());
             } else {
                 this.view.getGridPane().add(img, door.getX(), door.getY());
             }  
@@ -294,6 +295,6 @@ public class GameController implements Initializable {
     }
     
     public SimpleDoubleProperty getHpProperty(){
-        return model.hpProperty();
+        return model.getHpProperty();
     }
 }

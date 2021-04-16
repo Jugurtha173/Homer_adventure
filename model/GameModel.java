@@ -68,7 +68,7 @@ public class GameModel {
         return this.homer.look();
     }
     
-    public SimpleDoubleProperty hpProperty(){
+    public SimpleDoubleProperty getHpProperty(){
         return (SimpleDoubleProperty) this.homer.hpProperty;
     }
     
