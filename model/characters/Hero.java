@@ -49,6 +49,15 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
             this.posY += y;
         }
         
+        public void moveX(int x){
+            this.posX = x;
+        }
+        
+	
+        public void moveY(int y){
+            this.posY = y;
+        }
+        
         public ImageView getImg(){
             return this.img;
         }
@@ -155,7 +164,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 	}
 	
 	//aller dans une salle
-	public void go(String room) {
+	public boolean go(String room) {
 		// la liste des portes de la Room actuelle
 		List<Door> ld = this.getCurrentRoom().getDoors();
 		// on parcours les portes
@@ -167,7 +176,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 				// on verifie si il y a un ennemie
 				if(door.guard != null && door.guard.isAlive()) {
 					door.guard.attack((Attackable)this);
-					return;
+					return false;
 				}
 				// on ouvre sa porte
 				door.open();
@@ -175,17 +184,18 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 				if(door.isState()) {
                                     this.changeRoom(r);
                                     door.close();
+                                    return true;
 				}
 				// on regarde ou on a att�rit
 				//this.look();
 				// c'est bon on sort de la methode
-				return;		
+				return false;		
 			}
 			
 		}
 		// ici on a donc pas trouv� la Room
 		GameModel.show("!!! Room not found !!!");
-		
+		return false;
 	}
 	
 	//changer de salle

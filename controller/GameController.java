@@ -10,7 +10,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -32,6 +36,9 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import model.GameModel;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import model.characters.Attackable;
 import model.characters.Enemy;
 import model.characters.Hero;
@@ -90,7 +97,15 @@ public class GameController implements Initializable {
                 case D: model.moveHomer(+1, 0); break;
                 default: break;
             }
-        this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());          
+        this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());
+        for (Node node : this.view.getGridPane().getChildren()) {
+            if(GridPane.getRowIndex(node) == myHero.getY()
+                    && GridPane.getColumnIndex(node) == myHero.getX()
+                    && node instanceof DoorImage) {
+                this.go((DoorImage)node);
+                break;
+            }
+        }
     }
     
     @FXML
@@ -122,10 +137,6 @@ public class GameController implements Initializable {
         } else {
             this.show("Thank you ! We go back");
         }
-            
-        
-        
-        myHero.quit();
     }
    
     public void addInventory(ImageView img){
@@ -133,7 +144,8 @@ public class GameController implements Initializable {
     }
     
     public void syncRoom(){
-        this.view.getGridPane().getChildren().removeAll(this.view.getGridPane().getChildren());
+        
+        this.view.getGridPane().getChildren().clear();
         this.view.getTopLabel().setText(""+ myHero.getCurrentRoom());
         syncDoors();
         
@@ -230,17 +242,13 @@ public class GameController implements Initializable {
         List<Door> doors = myHero.getCurrentRoom().getDoors();
         
         for (Door door : doors) {
-            ImageView img = new ImageView("view/img/door.png");
-            img.setFitHeight(100);
-            img.setFitWidth(100);
-            img.setCursor(Cursor.HAND);
-            Tooltip tooltip = new Tooltip("GO to " + door.getOtherRoom(myHero));
-            Tooltip.install(img, tooltip);
-      
+            DoorImage img = new DoorImage(door, myHero);
+                              
             img.setOnMouseClicked(e -> {
-                myHero.go(door.getOtherRoom((Hero)myHero));
+                myHero.go(door.getOtherRoom(myHero));
                 this.syncRoom();
             });
+            
             if(door.room[1].equals(myHero.getCurrentRoom())){
                 this.view.getGridPane().add(img, gridSize - door.getX(), gridSize - door.getY());
             } else {
@@ -296,5 +304,30 @@ public class GameController implements Initializable {
     
     public SimpleDoubleProperty getHpProperty(){
         return model.getHpProperty();
+    }
+
+    // changer de salle avec transition
+    private void go(DoorImage doorImage) {
+                
+        if(myHero.go(""+doorImage.getDoor().getOtherRoom(myHero))){
+            myHero.moveX(gridSize - myHero.getX());
+            myHero.moveY(gridSize - myHero.getY());
+
+            ScaleTransition st = new ScaleTransition(Duration.millis(1000), this.view.getHomer());
+
+            st.setToX(100);
+            st.setToY(100);
+            st.play();
+
+            st.setOnFinished(e -> {
+                this.syncRoom();
+                ScaleTransition st2 = new ScaleTransition(Duration.millis(1000), this.view.getHomer());
+                st2.setToX(1);
+                st2.setToY(1);
+                st2.play();
+            });
+        }
+        
+        
     }
 }
