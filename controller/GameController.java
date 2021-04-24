@@ -5,16 +5,13 @@
  */
 package controller;
 
-import javafx.application.Platform;
+import view.DoorImage;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.EventType;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -24,7 +21,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,9 +32,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import model.GameModel;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 import model.characters.Attackable;
 import model.characters.Enemy;
 import model.characters.Hero;
@@ -119,25 +112,6 @@ public class GameController implements Initializable {
         this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());
         this.showMessage(this.model.look(), "#AEB6BF");
     }
-    
-    @FXML
-    public void quit(){
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setContentText("Really ? I'm always hungry, you want to RAGE QUIT ?");
-
-        ButtonType buttonTypeQuit = new ButtonType("QUIT");
-        ButtonType buttonTypeStay = new ButtonType("STAY", ButtonData.CANCEL_CLOSE);
-
-        alert.getButtonTypes().setAll(buttonTypeQuit, buttonTypeStay);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeQuit){
-            Platform.exit();
-            System.exit(0);
-        } else {
-            this.show("Thank you ! We go back");
-        }
-    }
    
     public void addInventory(ImageView img){
         this.view.getFlowInventory().getChildren().add(img);
@@ -145,8 +119,9 @@ public class GameController implements Initializable {
     
     public void syncRoom(){
         
-        this.view.getGridPane().getChildren().clear();
-        this.view.getTopLabel().setText(""+ myHero.getCurrentRoom());
+        ObservableList<Node> children = this.view.getGridPane().getChildren();
+        
+        children.clear();
         syncDoors();
         
         if(!(myHero.getCurrentRoom().isLigth)){
@@ -158,23 +133,15 @@ public class GameController implements Initializable {
                         BackgroundRepeat.REPEAT,
                         BackgroundPosition.CENTER,
                         BackgroundSize.DEFAULT)
-                )
-                
+                )                
             );
-            return;
+        } else {
+            syncObjects();
+            syncCharacters();     
         }
-
-        syncObjects();
-        syncCharacters();
-        
-        
-        this.view.getGridPane().getChildren().remove(this.view.getHomer());
         this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());
-        
-        for (Node node : this.view.getGridPane().getChildren()) {
+        for (Node node : children)
             GridPane.setHalignment(node, HPos.CENTER);
-        }
-        
     }
     
     public void syncObjects(){
@@ -197,10 +164,12 @@ public class GameController implements Initializable {
             });
             
             img.setOnMouseClicked(e -> {
+                // mettre l'objet dans l'inventaire
                 this.myHero.take(object.toString());
                 this.view.getGridPane().getChildren().remove(img);
                 this.addInventory(img);
                 
+                // utiliser l'objet dans l'inventaire
                 img.setOnMouseClicked(event -> {
                     myHero.use(object.toString());
                     this.syncRoom();
@@ -231,8 +200,6 @@ public class GameController implements Initializable {
                         myHero.talk();
                     });
                 }
-          
-            
                 this.view.getGridPane().add(img, ch.getX(), ch.getY());
             }
         }
@@ -243,36 +210,26 @@ public class GameController implements Initializable {
         
         for (Door door : doors) {
             DoorImage img = new DoorImage(door, myHero);
-                              
-            img.setOnMouseClicked(e -> {
-                myHero.go(door.getOtherRoom(myHero));
-                this.syncRoom();
-            });
             
-            if(door.room[1].equals(myHero.getCurrentRoom())){
+            if(door.room[1].equals(myHero.getCurrentRoom()))
                 this.view.getGridPane().add(img, gridSize - door.getX(), gridSize - door.getY());
-            } else {
+            else
                 this.view.getGridPane().add(img, door.getX(), door.getY());
-            }  
+              
         }
     }
     
     public void show(String text){
-        this.view.getTopLabel().setText(text);
+        this.view.show(text);
     }
     
     public void showMessage(String text, String color){
         
-        this.view.getTabPane().getSelectionModel().select(this.view.getMessageTab());        
-        Label newMessage = new Label(text);
-        newMessage.setStyle("-fx-background-color: "+ color + ";-fx-padding: 7");
-        newMessage.setWrapText(true);
-        this.view.getLabelMessage().getChildren().add(newMessage);
-        this.view.getScrollMessages().setVvalue(1.0);
+        this.view.showMessage(text, color);
     }
     
     public void showMessage(String text){
-        this.showMessage(text, "#5DADE2");
+        this.showMessage(text, "#5DADE2"); // default color
     }
     
     public void talk(Other other){
@@ -287,14 +244,12 @@ public class GameController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeYes){
             other.dropAllInventory();
-            alert.getButtonTypes().remove(buttonTypeYes);
-            alert.getButtonTypes().remove(buttonTypeNo);
+            alert.getButtonTypes().removeAll(buttonTypeYes, buttonTypeNo);
             alert.getButtonTypes().setAll(buttonTypeBye);
             alert.setContentText(other.getSpeechs().get(1));
             alert.showAndWait();
         } else {
-            alert.getButtonTypes().remove(buttonTypeYes);
-            alert.getButtonTypes().remove(buttonTypeNo);
+            alert.getButtonTypes().removeAll(buttonTypeYes, buttonTypeNo);
             alert.getButtonTypes().setAll(buttonTypeBye);
             alert.setContentText(other.getSpeechs().get(2));
             alert.showAndWait();
@@ -310,24 +265,17 @@ public class GameController implements Initializable {
     private void go(DoorImage doorImage) {
                 
         if(myHero.go(""+doorImage.getDoor().getOtherRoom(myHero))){
-            myHero.moveX(gridSize - myHero.getX());
-            myHero.moveY(gridSize - myHero.getY());
-
-            ScaleTransition st = new ScaleTransition(Duration.millis(1000), this.view.getHomer());
-
-            st.setToX(100);
-            st.setToY(100);
-            st.play();
-
-            st.setOnFinished(e -> {
-                this.syncRoom();
-                ScaleTransition st2 = new ScaleTransition(Duration.millis(1000), this.view.getHomer());
-                st2.setToX(1);
-                st2.setToY(1);
-                st2.play();
-            });
+            int xBefore = myHero.getX();
+            int yBefore = myHero.getY();
+            int xAfter = (gridSize - myHero.getX());
+            int yAfter = (gridSize - myHero.getY());
+            
+            myHero.moveX(xAfter);
+            myHero.moveY(yAfter);
+            
+            this.view.goTransition(xBefore, yBefore, xAfter, yAfter);
+            this.show(""+ myHero.getCurrentRoom());
         }
-        
-        
     }
+
 }

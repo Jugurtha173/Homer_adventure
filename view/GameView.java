@@ -7,10 +7,16 @@ package view;
 
 import controller.*;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -22,6 +28,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+
 /**
  *
  * @author JUGURTHA
@@ -43,7 +53,6 @@ public class GameView implements Initializable {
     @FXML ProgressBar hpBar;
     @FXML FlowPane flowInventory;
     @FXML ScrollPane scrollMessages;
-
     
     GameController controller;
     
@@ -68,7 +77,21 @@ public class GameView implements Initializable {
     
     @FXML
     public void quit(){
-        controller.quit();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Really ? I'm always hungry, you want to RAGE QUIT ?");
+
+        ButtonType buttonTypeQuit = new ButtonType("QUIT");
+        ButtonType buttonTypeStay = new ButtonType("STAY", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeQuit, buttonTypeStay);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeQuit){
+            Platform.exit();
+            System.exit(0);
+        } else {
+            this.show("Thank you ! We go back");
+        }
     }
  
     
@@ -100,13 +123,40 @@ public class GameView implements Initializable {
     }
     
     public void show(String text){
-        controller.show(text);
+        this.topLabel.setText(text);
     }
     
-    public void showMessage(String text){
-        controller.showMessage(text);
+    public void goTransition(int xBefore, int yBefore, int xAfter, int yAfter) {
+        
+        Circle circleTransition = new Circle(1, Color.BLACK);
+        this.gridPane.add(circleTransition, xBefore, yBefore);
+
+        ScaleTransition st = new ScaleTransition(Duration.millis(1000), circleTransition);
+
+        st.setToX(1000);
+        st.setToY(1000);
+        st.play();
+
+        st.setOnFinished(e -> {
+            this.syncRoom();
+            this.gridPane.add(circleTransition, xAfter, yAfter);
+            ScaleTransition st2 = new ScaleTransition(Duration.millis(1000), circleTransition);
+            st2.setToX(0);
+            st2.setToY(0);
+            st2.play();
+        });
+    }
+
+    public void showMessage(String text, String color) {
+        this.tabPane.getSelectionModel().select(this.messageTab);        
+        LabelMessage newMessage = new LabelMessage(text, color);
+        this.labelMessage.getChildren().add(newMessage);
+        this.scrollMessages.setVvalue(1.0);
     }
     
+    
+    
+    // ------------------- getters ------------------- //
     public BorderPane getRoot() {
         return root;
     }
@@ -174,5 +224,5 @@ public class GameView implements Initializable {
     public GameController getController() {
         return controller;
     }
-    
+
 }

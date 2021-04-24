@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package view;
 
 import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
@@ -27,7 +27,7 @@ public class DoorImage extends ImageView {
 
         this.setFitHeight(100);
         this.setFitWidth(100);
-        this.setCursor(Cursor.HAND);
+        this.setCursor(Cursor.OPEN_HAND);
         Tooltip tooltip = new Tooltip("GO to " + door.getOtherRoom(myHero));
         Tooltip.install(this, tooltip); 
    }

@@ -60,9 +60,7 @@ public class Duff extends MyObject{
 		else 
                     duff = getNextFullDuff(c);
 
-		if(duff == null) {	
-                    return;
-		} else {
+		if(duff != null) {
                     GameModel.show("Drinkink duff ... YES !");
                     c.editHP(duff.getHealthEffect());
                     duff.full = false;

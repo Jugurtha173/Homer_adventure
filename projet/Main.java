@@ -16,7 +16,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        SwitchStage mystage = new SwitchStage("view/game.fxml");
+        SwitchStage mystage = new SwitchStage("view/home.fxml");
         mystage.show();
     }
 

@@ -6,7 +6,7 @@ import model.characters.MyCharacter;
 
 public class Skate extends MyObject{
     public Skate() {
-    	super("Skate", -3, "view/img/skate.png", 0, 0);
+    	super("Skate", -3, "view/img/skate.png", 1, 2);
     }
     
     public Skate(int x, int y) {
