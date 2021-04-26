@@ -59,22 +59,8 @@ public class GameController implements Initializable {
     }
   
     @Override
-    public void initialize(URL url, ResourceBundle rb) {   
-        Image image = new Image("view/img/border.jpg");
-        this.view.getGridPane().setBackground(
-            new Background(
-                new BackgroundImage(image,
-                    BackgroundRepeat.REPEAT,
-                    BackgroundRepeat.REPEAT,
-                    BackgroundPosition.CENTER,
-                    BackgroundSize.DEFAULT)
-            )
-        );
-            
-        this.view.getRoot().addEventHandler(KeyEvent.KEY_PRESSED, (event) ->{
-            moveHomer(event);
-        });
-        
+    public void initialize(URL url, ResourceBundle rb) {
+        this.view.getRoot().addEventHandler(KeyEvent.KEY_PRESSED, (event) -> moveHomer(event));
         syncRoom();   
     }
     
@@ -90,6 +76,7 @@ public class GameController implements Initializable {
                 case D: model.moveHomer(+1, 0); break;
                 default: break;
             }
+        
         this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());
         for (Node node : this.view.getGridPane().getChildren()) {
             if(GridPane.getRowIndex(node) == myHero.getY()

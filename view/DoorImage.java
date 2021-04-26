@@ -8,7 +8,6 @@ package view;
 import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import model.characters.Hero;
 import model.environement.Door;
 
@@ -17,8 +16,8 @@ import model.environement.Door;
  * @author JUGURTHA
  */
 public class DoorImage extends ImageView {
-    private Door door;
-    private Hero myHero;
+    private final Door door;
+    private final Hero myHero;
     
    public DoorImage(Door door, Hero myHero){
         super("view/img/door.png");
@@ -27,7 +26,7 @@ public class DoorImage extends ImageView {
 
         this.setFitHeight(100);
         this.setFitWidth(60);
-        this.setCursor(Cursor.OPEN_HAND);
+        this.setCursor(Cursor.CLOSED_HAND);
         Tooltip tooltip = new Tooltip("GO to " + door.getOtherRoom(myHero));
         Tooltip.install(this, tooltip); 
    }

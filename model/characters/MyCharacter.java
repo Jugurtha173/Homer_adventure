@@ -19,35 +19,33 @@ public abstract class MyCharacter {
     public DoubleProperty hpProperty = new SimpleDoubleProperty();
     private Room currentRoom;
     protected ImageView img;
-
-
     int x, y;
 
     public List<MyObject> inventory = new ArrayList<>();
 
     public MyCharacter() {
-            this.name = DEFAULT_NAME;
+        this.name = DEFAULT_NAME;
     }
 
     public MyCharacter(String name) {
-            this.name = name;
-            this.HP = MAX_HP;
+        this.name = name;
+        this.HP = MAX_HP;
     }
     public MyCharacter(String name, String url) {
-            this(name, url, 2, 2);
+        this(name, url, 2, 2);
     }
     public MyCharacter(String name, String url, int x, int y) {
-            this.name = name;
-            this.HP = MAX_HP;
-            this.img = new ImageView(url);
-            this.img.setFitHeight(100);
-            this.img.setFitWidth(50);
-            this.x = x;
-            this.y = y;
+        this.name = name;
+        this.HP = MAX_HP;
+        this.img = new ImageView(url);
+        this.img.setFitHeight(100);
+        this.img.setFitWidth(50);
+        this.x = x;
+        this.y = y;
     }
 
     public int getHP() {
-            return this.HP;
+        return this.HP;
     }
 
     public void editHP(int change) {
@@ -62,60 +60,60 @@ public abstract class MyCharacter {
     }
 
     public Boolean isAlive() {
-            return this.alive;
+        return this.alive;
     }
 
     public void showHP() {
-            int level = this.getHP();
-            if(level < 0) level = 0;
+        int level = this.getHP();
+        if(level < 0) level = 0;
 
-            String hp = this.getName() + " HP : [";
-            for (int i = 0; i < MAX_HP; i++) {
-                    if(i < level) {
-                            hp += "#";
-                    } else {
-                            hp += "-";
-                    }
-            }
-            // afficher un pourcentage
-            hp += "] " + ((level * 100) / MAX_HP) + "%\n";
-            //System.out.println(hp);
+        String hp = this.getName() + " HP : [";
+        for (int i = 0; i < MAX_HP; i++) {
+                if(i < level) {
+                        hp += "#";
+                } else {
+                        hp += "-";
+                }
+        }
+        // afficher un pourcentage
+        hp += "] " + ((level * 100) / MAX_HP) + "%\n";
+        //System.out.println(hp);
     }
 
     public String getName() {
-            return this.name;
+        return this.name;
     }
 
     public Room getCurrentRoom() {
-            return currentRoom;
+        return currentRoom;
     }
 
     public void setCurrentRoom(Room currentRoom) {
-            this.currentRoom = currentRoom;
+        this.currentRoom = currentRoom;
     }
 
     public void dropAllInventory() {
-            for(MyObject obj : this.inventory) {
-                    this.getCurrentRoom().addObject(obj);
-            }
-            this.inventory.clear();
+        for(MyObject obj : this.inventory) {
+                this.getCurrentRoom().addObject(obj);
+        }
+        this.inventory.clear();
 
     }
 
     @Override
     public String toString() {	
-            return this.name;
+        return this.name;
     }
 
     public void die() {
             if( this.getHP() <= 0) {
-                    GameModel.show(this.getName() + " is dead !");
-                    this.alive = false;
-                    this.dropAllInventory();
-                    this.img = new ImageView("view/img/dead.png");
-                    this.img.setFitHeight(40);
-                    this.img.setFitWidth(40);
-                    GameModel.controller.syncRoom();
+                GameModel.show(this.getName() + " is dead !");
+                this.alive = false;
+                this.dropAllInventory();
+                this.img = new ImageView("view/img/dead.png");
+                this.img.setFitHeight(40);
+                this.img.setFitWidth(40);
+                GameModel.controller.syncRoom();
             }
 
     }

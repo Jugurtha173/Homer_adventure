@@ -30,10 +30,10 @@ public class NuclearCentral {
         // creation des lieux
         Room homerDesk = new Room("My Desk", "view/img/homerDesk.png");
         Room hall = new Room("Hall");
-        Room rest = new Room("Rest Room");
+        Room rest = new Room("Rest Room", "view/img/restRoom.png");
         Room b24 = new Room("B24");
         Room control = new Room("Control Room", "view/img/controlRoom.png");
-        Room kitchen = new Room("Kitchen");
+        Room kitchen = new Room("Kitchen", "view/img/kitchen.png");
         Room storage = new Room("Storage Room", false);
         Room moes = new Room("MOE'S Bar", "view/img/moesBar.png");
         Room engine = new Room("Engine Room");
