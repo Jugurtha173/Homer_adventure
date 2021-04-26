@@ -28,20 +28,20 @@ public class NuclearCentral {
         // initialisation
 
         // creation des lieux
-        Room homerDesk = new Room("My Desk");
+        Room homerDesk = new Room("My Desk", "view/img/homerDesk.png");
         Room hall = new Room("Hall");
         Room rest = new Room("Rest Room");
         Room b24 = new Room("B24");
-        Room control = new Room("Control Room");
+        Room control = new Room("Control Room", "view/img/controlRoom.png");
         Room kitchen = new Room("Kitchen");
         Room storage = new Room("Storage Room", false);
-        Room moes = new Room("MOE'S Bar");
+        Room moes = new Room("MOE'S Bar", "view/img/moesBar.png");
         Room engine = new Room("Engine Room");
         Room auditorium = new Room("Auditorium");
         Room employee = new Room("Employee Break Room");
         Room operations = new Room("Operations Center");
         Room production = new Room("Production Room");
-        Room burnsDesk = new Room("Burns Office");	
+        Room burnsDesk = new Room("Burns Office", "view/img/burnsDesk.png");	
         Room safety = new Room("Safety deposit box");	
 
         // ajout des lieux a la NuclearCenter

@@ -22,8 +22,14 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -131,7 +137,7 @@ public class GameView implements Initializable {
         Circle circleTransition = new Circle(1, Color.BLACK);
         this.gridPane.add(circleTransition, xBefore, yBefore);
 
-        ScaleTransition st = new ScaleTransition(Duration.millis(1000), circleTransition);
+        ScaleTransition st = new ScaleTransition(Duration.millis(600), circleTransition);
 
         st.setToX(1000);
         st.setToY(1000);
@@ -140,7 +146,7 @@ public class GameView implements Initializable {
         st.setOnFinished(e -> {
             this.syncRoom();
             this.gridPane.add(circleTransition, xAfter, yAfter);
-            ScaleTransition st2 = new ScaleTransition(Duration.millis(1000), circleTransition);
+            ScaleTransition st2 = new ScaleTransition(Duration.millis(600), circleTransition);
             st2.setToX(0);
             st2.setToY(0);
             st2.play();
@@ -223,6 +229,19 @@ public class GameView implements Initializable {
 
     public GameController getController() {
         return controller;
+    }
+
+    public void setBackGround(String bgUrl) {
+        Image image = new Image(bgUrl);
+            this.gridPane.setBackground(
+                new Background(
+                    new BackgroundImage(image,
+                        BackgroundRepeat.REPEAT,
+                        BackgroundRepeat.REPEAT,
+                        BackgroundPosition.CENTER,
+                        BackgroundSize.DEFAULT)
+                )                
+            );
     }
 
 }

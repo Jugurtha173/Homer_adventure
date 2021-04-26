@@ -84,16 +84,17 @@ public class Other extends MyCharacter implements Talkable{
             dialog.setContentText(this.speechs.get(0));
             
             Optional<String> result = dialog.showAndWait();
-            Float note = Float.parseFloat(result.get());  
+            Float note = 0F;
+            try {
+                note = Float.parseFloat(result.get());  
+            } catch (Exception e) {}
             
-            if(note >= 17) {
+            if(note >= 17) 
                 dialog.setContentText(this.speechs.get(1));
-                dialog.showAndWait();
-            } else {
-                System.out.println("la");
+            else 
                 dialog.setContentText(this.speechs.get(2));
-                dialog.showAndWait();
-            }
+            
+            dialog.showAndWait();
 		
 	}
     

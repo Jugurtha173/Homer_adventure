@@ -125,21 +125,14 @@ public class GameController implements Initializable {
         syncDoors();
         
         if(!(myHero.getCurrentRoom().isLigth)){
-            Image image = new Image("view/img/border.png");
-            this.view.getGridPane().setBackground(
-                new Background(
-                    new BackgroundImage(image,
-                        BackgroundRepeat.REPEAT,
-                        BackgroundRepeat.REPEAT,
-                        BackgroundPosition.CENTER,
-                        BackgroundSize.DEFAULT)
-                )                
-            );
+            this.view.setBackGround("view/img/darkRoom.png");
         } else {
+            this.view.setBackGround(myHero.getCurrentRoom().getBgUrl());
             syncObjects();
             syncCharacters();     
         }
         this.view.getGridPane().add(this.view.getHomer(), model.getX(), model.getY());
+        // centrer chaque node du gridPane
         for (Node node : children)
             GridPane.setHalignment(node, HPos.CENTER);
     }

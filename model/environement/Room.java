@@ -16,8 +16,16 @@ public class Room {
 	private List<Door> doors = new ArrayList<>();
 	private List<MyObject> objects = new ArrayList<>();
 	private List<MyCharacter> characters = new ArrayList<>();
+        private String BgUrl = "view/img/defaultBG.png";
+
+    
 	
-	public Room(String name) {
+	public Room(String name, String BgUrl) {
+		this(name, true);
+                this.BgUrl = BgUrl;
+	}
+        
+        public Room(String name) {
 		this(name, true);
 	}
 	
@@ -80,6 +88,10 @@ public class Room {
 	public List<MyCharacter> getCharacters(){
 		return this.characters;
 	}
+        
+        public String getBgUrl() {
+            return BgUrl;
+        }
 	
 	//indique dans quelle salle sommes nous
 	@Override

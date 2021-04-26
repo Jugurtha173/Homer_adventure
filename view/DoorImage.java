@@ -26,7 +26,7 @@ public class DoorImage extends ImageView {
         this.myHero = myHero;
 
         this.setFitHeight(100);
-        this.setFitWidth(100);
+        this.setFitWidth(60);
         this.setCursor(Cursor.OPEN_HAND);
         Tooltip tooltip = new Tooltip("GO to " + door.getOtherRoom(myHero));
         Tooltip.install(this, tooltip); 
