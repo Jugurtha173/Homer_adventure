@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.ScaleTransition;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -36,7 +35,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import projet.SwitchStage;
 
 /**
  *
@@ -93,8 +94,7 @@ public class GameView implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeQuit){
-            Platform.exit();
-            System.exit(0);
+            SwitchStage.switchTo("home", root);
         } else {
             this.show("Thank you ! We go back");
         }
@@ -116,20 +116,15 @@ public class GameView implements Initializable {
         controller.syncRoom();
     }
     
-    public void syncObjects(){
-        controller.syncObjects();
-    }
-    
-    public void syncCharacters(){
-        controller.syncCharacters();
-    }
-    
-    public void syncDoors(){
-        controller.syncDoors();
-    }
-    
     public void show(String text){
         this.topLabel.setText(text);
+    }
+
+    public void showMessage(String text, String color) {
+        this.tabPane.getSelectionModel().select(this.messageTab);        
+        LabelMessage newMessage = new LabelMessage(text, color);
+        this.labelMessage.getChildren().add(newMessage);
+        this.scrollMessages.setVvalue(1.0);
     }
     
     public void goTransition(int xBefore, int yBefore, int xAfter, int yAfter) {
@@ -152,14 +147,6 @@ public class GameView implements Initializable {
             st2.play();
         });
     }
-
-    public void showMessage(String text, String color) {
-        this.tabPane.getSelectionModel().select(this.messageTab);        
-        LabelMessage newMessage = new LabelMessage(text, color);
-        this.labelMessage.getChildren().add(newMessage);
-        this.scrollMessages.setVvalue(1.0);
-    }
-    
     
     
     // ------------------- getters ------------------- //

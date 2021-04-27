@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="427.0" fitWidth="629.0" layoutX="-17.0" layoutY="-13.0">
+         <image>
+            <Image url="@img/Simpsons-Donut.png" />
+         </image>
+      </ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="14.0" prefHeight="39.0" prefWidth="245.0" text="YOUHOUUUU! MY DONUT " textAlignment="CENTER" textFill="#e80ba5" wrapText="true">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="192.0" layoutY="53.0" prefHeight="65.0" prefWidth="212.0" text="YOU WIN" textAlignment="CENTER" textFill="#f6ff00" underline="true">
+         <font>
+            <Font size="44.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
