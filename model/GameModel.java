@@ -22,6 +22,7 @@ public class GameModel {
     
     public static GameController controller;
     public static GameView view;
+
     NuclearCentral nc = new NuclearCentral();
     Hero homer = new Hero("Homer");
     
@@ -90,5 +91,9 @@ public class GameModel {
     
     public static void talk(Other other){
         controller.talk(other);
+    }
+    
+     public static void win() {
+        controller.win();
     }
 }

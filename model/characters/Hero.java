@@ -18,7 +18,6 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
     
     int posX = 4;
     int posY = 4;
-    
 
     Scanner action = new Scanner(System.in);
     Scanner choice = new Scanner(System.in);
@@ -30,98 +29,92 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
         super(name, "view/img/homer.gif");
     }
 
+    @Override
     public int getX(){
         return this.posX;
     }
 
 
+    @Override
     public int getY(){
         return this.posY;
     }
 
 
+    @Override
     public void setX(int x){
         this.posX += x;
     }
 
 
+    @Override
     public void setY(int y){
         this.posY += y;
     }
 
     public void moveX(int x){
         this.posX = x;
-    }
-        
+    }      
 	
     public void moveY(int y){
         this.posY = y;
     }
-
-    public ImageView getImg(){
-        return this.img;
-    }
-
-    public void setImg(ImageView img){
-        this.img = img;
-    }
 	
     //aller dans une salle
     public boolean go(String room) {
-            // la liste des portes de la Room actuelle
-            List<Door> ld = this.getCurrentRoom().getDoors();
-            // on parcours les portes
-            for(Door door : ld) {
-                    // pour chaque porte on recupere la Room d'a cote
-                    Room r = door.room[0] != this.getCurrentRoom() ? door.room[0] : door.room[1] ;
-                    // si c'est bien la Room qu'on veut
-                    if(r.getName().equalsIgnoreCase(room)) {
-                            // on verifie si il y a un ennemie
-                            if(door.guard != null && door.guard.isAlive()) {
-                                    door.guard.attack((Attackable)this);
-                                    return false;
-                            }
-                            // on ouvre sa porte
-                            door.open();
-                            // on entre dans la Room si elle est ouverte
-                            if(door.isState()) {
-                                this.changeRoom(r);
-                                door.close();
-                                return true;
-                            }
-                            // on regarde ou on a att�rit
-                            //this.look();
-                            // c'est bon on sort de la methode
-                            return false;		
-                    }
-
+        // la liste des portes de la Room actuelle
+        List<Door> ld = this.getCurrentRoom().getDoors();
+        // on parcours les portes
+        for(Door door : ld) {
+            // pour chaque porte on recupere la Room d'a cote
+            Room r = door.room[0] != this.getCurrentRoom() ? door.room[0] : door.room[1] ;
+            // si c'est bien la Room qu'on veut
+            if(r.getName().equalsIgnoreCase(room)) {
+                // on verifie si il y a un ennemie
+                if(door.guard != null && door.guard.isAlive()) {
+                    door.guard.attack((Attackable)this);
+                    return false;
+                }
+                // on ouvre sa porte
+                door.open();
+                // on entre dans la Room si elle est ouverte
+                if(door.isState()) {
+                    this.changeRoom(r);
+                    door.close();
+                    return true;
+                }
+                // on regarde ou on a att�rit
+                //this.look();
+                // c'est bon on sort de la methode
+                return false;		
             }
-            // ici on a donc pas trouv� la Room
-            GameModel.show("!!! Room not found !!!");
-            return false;
+        }
+        // ici on a donc pas trouv� la Room
+        GameModel.show("!!! Room not found !!!");
+        return false;
     }
 
     //changer de salle
     public void changeRoom(Room room) {
-            this.getCurrentRoom().removeCharacter(this);
-            this.setCurrentRoom(room);
-            room.addCharacter(this);
+        this.getCurrentRoom().removeCharacter(this);
+        this.setCurrentRoom(room);
+        room.addCharacter(this);
     }
 
     //prendre un objet
     public void take(String object) {
-            if(this.isCurrentLight()) {
-                    MyObject obj = findObject(object);
-                    if(obj != null) {
-                            this.inventory.add(obj);
-                            this.getCurrentRoom().getObjects().remove(obj);
-                            GameModel.show(object.toString() + " taken");
-                    }
-                    if(obj instanceof Donuts) {
-                            this.win = true;
-                            this.win();
-                    }
+        if(this.isCurrentLight()) {
+            MyObject obj = findObject(object);
+            if(obj != null) {
+                this.inventory.add(obj);
+                this.getCurrentRoom().getObjects().remove(obj);
+                GameModel.show(object + " taken");
             }
+            if(obj instanceof Donuts) {
+                this.win = true;
+                this.win();
+            }
+        }
     }
 
     //deposer un objet
@@ -138,7 +131,7 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
 
     //gagner la partie
     public void win(){
-            GameModel.show("YOUHOUUUUUUU! MY DONUTS \n\n\n\nGAME FINISH; YOU WON!!");
+        GameModel.win();
     }
 
     //test si une salle est eclairee ou non

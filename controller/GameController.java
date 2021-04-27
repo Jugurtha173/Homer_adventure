@@ -22,14 +22,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import model.GameModel;
 import javafx.scene.layout.GridPane;
 import model.characters.Attackable;
@@ -39,6 +33,7 @@ import model.characters.MyCharacter;
 import model.characters.Other;
 import model.environement.Door;
 import model.myObjects.MyObject;
+import projet.SwitchStage;
 import view.GameView;
 /**
  *
@@ -204,7 +199,6 @@ public class GameController implements Initializable {
     }
     
     public void showMessage(String text, String color){
-        
         this.view.showMessage(text, color);
     }
     
@@ -222,18 +216,19 @@ public class GameController implements Initializable {
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
         Optional<ButtonType> result = alert.showAndWait();
+        
+        // apres la reponse
+        
+        alert.getButtonTypes().removeAll(buttonTypeYes, buttonTypeNo);
+        alert.getButtonTypes().setAll(buttonTypeBye);
         if (result.get() == buttonTypeYes){
-            other.dropAllInventory();
-            alert.getButtonTypes().removeAll(buttonTypeYes, buttonTypeNo);
-            alert.getButtonTypes().setAll(buttonTypeBye);
+            other.dropAllInventory();  
             alert.setContentText(other.getSpeechs().get(1));
-            alert.showAndWait();
         } else {
-            alert.getButtonTypes().removeAll(buttonTypeYes, buttonTypeNo);
-            alert.getButtonTypes().setAll(buttonTypeBye);
             alert.setContentText(other.getSpeechs().get(2));
-            alert.showAndWait();
         }
+        
+        alert.showAndWait();
         this.syncRoom();
     }
     
@@ -256,6 +251,10 @@ public class GameController implements Initializable {
             this.view.goTransition(xBefore, yBefore, xAfter, yAfter);
             this.show(""+ myHero.getCurrentRoom());
         }
+    }
+
+    public void win() {
+        SwitchStage.switchTo("win", this.view.getRoot());
     }
 
 }

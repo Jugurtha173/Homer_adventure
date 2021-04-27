@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import projet.SwitchStage;
 
 /**
@@ -19,18 +18,13 @@ import projet.SwitchStage;
  */
 public class homeController implements Initializable {
     
-    
     @FXML
     Button startBtn;
-    
-   
     
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
          startBtn.setOnAction( event -> {
-            ((Stage) startBtn.getScene().getWindow()).close();
-            SwitchStage myStage = new SwitchStage("view/game.fxml");
-            myStage.show();
+            SwitchStage.switchTo("game", startBtn);
         });
         
     }   
