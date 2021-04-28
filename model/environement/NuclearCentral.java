@@ -176,7 +176,7 @@ public class NuclearCentral {
 
         // Homer est dans la premiere salle (son bureau)
         this.Rooms.get(0).addCharacter(homer);
-
-        homer.beAttacked(-3);
+        
+        homer.beAttacked(-3);       
     }
 }

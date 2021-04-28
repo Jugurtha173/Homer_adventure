@@ -257,4 +257,25 @@ public class GameController implements Initializable {
         SwitchStage.switchTo("win", this.view.getRoot());
     }
 
+    public void lose() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("YOU LOSE");
+        alert.setHeaderText("You are dead !");
+        alert.setContentText("Do you want to go back to home page to try again OR exit the game");
+
+        ButtonType buttonTypeAgain = new ButtonType("Try again", ButtonData.CANCEL_CLOSE);
+        ButtonType buttonTypeExit = new ButtonType("Exit", ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeAgain, buttonTypeExit);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        
+        // apres la reponse
+
+        if (result.get() == buttonTypeAgain)
+            SwitchStage.switchTo("home", this.view.getRoot());
+        else
+            System.exit(0);
+//        
+    }
+
 }

@@ -96,4 +96,8 @@ public class GameModel {
      public static void win() {
         controller.win();
     }
+     
+     public static void lose() {
+        controller.lose();
+    }
 }

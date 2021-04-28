@@ -274,7 +274,8 @@ public class Hero extends MyCharacter implements Attackable, Talkable{
         this.editHP(damage);	
         //this.showHP();
         // on verifie le hero est toujours vivant
-        this.die();
+        if(this.die())
+            GameModel.lose();
     }
 
     @Override

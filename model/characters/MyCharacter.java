@@ -105,17 +105,18 @@ public abstract class MyCharacter {
         return this.name;
     }
 
-    public void die() {
-            if( this.getHP() <= 0) {
-                GameModel.show(this.getName() + " is dead !");
-                this.alive = false;
-                this.dropAllInventory();
-                this.img = new ImageView("view/img/dead.png");
-                this.img.setFitHeight(40);
-                this.img.setFitWidth(40);
-                GameModel.controller.syncRoom();
-            }
-
+    public boolean die() {
+        if( this.getHP() <= 0) {
+            GameModel.show(this.getName() + " is dead !");
+            this.alive = false;
+            this.dropAllInventory();
+            this.img = new ImageView("view/img/dead.png");
+            this.img.setFitHeight(40);
+            this.img.setFitWidth(40);
+            GameModel.controller.syncRoom();
+            return true;
+        }
+        return false;
     }
 
     public ImageView getImg(){

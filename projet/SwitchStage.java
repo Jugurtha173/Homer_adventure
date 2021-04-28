@@ -20,6 +20,7 @@ public class SwitchStage extends Stage{
         }
        catch (IOException e){
            System.out.println("ERREUR, SwitchStage");
+           e.printStackTrace();
        }
     }
     
